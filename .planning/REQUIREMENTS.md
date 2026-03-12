@@ -56,10 +56,10 @@
 
 ### UI/UX
 
-- [ ] **UI-01**: Sidebar navigation (collapsible, fixed left) with 6 nav links and active state highlighting
-- [ ] **UI-02**: Top bar with page title, building selector, date display, notification bell, dark/light mode toggle
+- [x] **UI-01**: Sidebar navigation (collapsible, fixed left) with 6 nav links and active state highlighting
+- [x] **UI-02**: Top bar with page title, building selector, date display, notification bell, dark/light mode toggle
 - [ ] **UI-03**: Responsive layout: sidebar hidden on mobile, hamburger menu, stacked cards
-- [ ] **UI-04**: Dark mode primary theme with colors: primary (#10B981), accent (#3B82F6), dark background (#0F172A), glass-morphism cards
+- [x] **UI-04**: Dark mode primary theme with colors: primary (#10B981), accent (#3B82F6), dark background (#0F172A), glass-morphism cards
 - [ ] **UI-05**: Inter font family throughout, border radius 12px for cards, 8px for buttons
 - [ ] **UI-06**: Fade-in animations on page load, number count-up on summary cards, smooth chart transitions
 - [ ] **UI-07**: Loading skeletons, error states with retry, empty states
@@ -70,8 +70,8 @@
 - [ ] **INT-01**: Next.js API routes proxy to Supabase (all endpoints: /api/dashboard/summary, /api/energy, /api/energy/buildings, /api/waste, /api/waste/summary, /api/anomalies, /api/recommendations, /api/carbon, /api/reports/generate)
 - [ ] **INT-02**: Next.js API route for predictions (/api/predictions) calls FastAPI backend at http://localhost:8000
 - [ ] **INT-03**: Next.js API route for simulation (/api/simulate) calls FastAPI backend
-- [ ] **INT-04**: Supabase client configured with provided URL and anon key
-- [ ] **INT-05**: All frontend components use API helper library (src/lib/api.js) for data fetching
+- [x] **INT-04**: Supabase client configured with provided URL and anon key
+- [x] **INT-05**: All frontend components use API helper library (src/lib/api.js) for data fetching
 
 ## v2 Requirements
 
@@ -158,10 +158,10 @@
 | RPRT-02 | Phase 6 | Pending |
 | RPRT-03 | Phase 6 | Pending |
 | RPRT-04 | Phase 6 | Pending |
-| UI-01 | Phase 7 | Pending |
-| UI-02 | Phase 7 | Pending |
+| UI-01 | Phase 7 | Complete |
+| UI-02 | Phase 7 | Complete |
 | UI-03 | Phase 7 | Pending |
-| UI-04 | Phase 7 | Pending |
+| UI-04 | Phase 7 | Complete |
 | UI-05 | Phase 7 | Pending |
 | UI-06 | Phase 7 | Pending |
 | UI-07 | Phase 7 | Pending |
@@ -169,8 +169,8 @@
 | INT-01 | Phase 7 | Pending |
 | INT-02 | Phase 7 | Pending |
 | INT-03 | Phase 7 | Pending |
-| INT-04 | Phase 7 | Pending |
-| INT-05 | Phase 7 | Pending |
+| INT-04 | Phase 7 | Complete |
+| INT-05 | Phase 7 | Complete |
 
 **Coverage:**
 - v1 requirements: 42 total
