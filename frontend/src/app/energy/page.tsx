@@ -26,7 +26,7 @@ export default function EnergyPage() {
   return (
     <div className="space-y-6">
       {/* Filters */}
-      <div className="glass-card p-4 flex flex-wrap gap-4 items-center">
+      <div className="dashboard-card p-4 flex flex-wrap gap-6 items-center">
         <div className="flex items-center space-x-2">
           <label className="text-sm text-gray-400">Building:</label>
           <select
@@ -61,32 +61,32 @@ export default function EnergyPage() {
       </div>
 
       {/* Main Chart */}
-      <div className="glass-card p-6">
-        <h2 className="mb-4 text-lg font-semibold">Hourly Consumption</h2>
+      <div className="dashboard-card p-8">
+        <h2 className="mb-4 text-xl font-semibold tracking-tight">Hourly Consumption</h2>
         <EnergyDetailChart building={selectedBuilding} dateRange={dateRange} />
       </div>
 
       {/* Heatmap */}
-      <div className="glass-card p-6">
-        <h2 className="mb-4 text-lg font-semibold">Usage Heatmap (Day × Hour)</h2>
+      <div className="dashboard-card p-8">
+        <h2 className="mb-4 text-xl font-semibold tracking-tight">Usage Heatmap (Day × Hour)</h2>
         <HeatmapChart building={selectedBuilding} dateRange={dateRange} />
       </div>
 
       {/* Peak Prediction and Comparison */}
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <div className="glass-card p-6">
-          <h2 className="mb-4 text-lg font-semibold">Peak Prediction</h2>
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+        <div className="dashboard-card p-8">
+          <h2 className="mb-4 text-xl font-semibold tracking-tight">Peak Prediction</h2>
           <PeakPredictionCard building={selectedBuilding} />
         </div>
-        <div className="glass-card p-6">
-          <h2 className="mb-4 text-lg font-semibold">Historical Comparison</h2>
+        <div className="dashboard-card p-8">
+          <h2 className="mb-4 text-xl font-semibold tracking-tight">Historical Comparison</h2>
           <ComparisonChart building={selectedBuilding} />
         </div>
       </div>
 
       {/* Anomaly Timeline */}
-      <div className="glass-card p-6">
-        <h2 className="mb-4 text-lg font-semibold">Detected Anomalies</h2>
+      <div className="dashboard-card p-8">
+        <h2 className="mb-4 text-xl font-semibold tracking-tight">Detected Anomalies</h2>
         <AnomalyTimeline building={selectedBuilding} />
       </div>
     </div>

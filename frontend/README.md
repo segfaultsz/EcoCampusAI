@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EcoCampus AI 🌍⚡
+
+*Smart insights for a sustainable campus.*
+
+EcoCampus AI is a full-stack dashboard designed to monitor real-time electricity consumption and waste generation, predict peak energy usage, detect anomalies, and suggest actionable optimization strategies.
+
+## Architecture
+- **Frontend:** Next.js 14 (App Router), Tailwind CSS, Recharts
+- **Backend:** Python FastAPI for ML Models (Prophet, Isolation Forest)
+- **Database:** Supabase (PostgreSQL)
 
 ## Getting Started
 
-First, run the development server:
-
+### 1. Start the Backend API
+Navigate to the `backend` directory, activate the environment, and run the FastAPI server:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cd backend
+.\venv\Scripts\activate
+python -m app.main
 ```
+Server runs at `http://localhost:8000`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Start the Frontend
+Navigate to the `frontend` directory, install dependencies, and start the dev server:
+```bash
+cd frontend
+npm install
+npm run dev
+```
+Dashboard runs at `http://localhost:3000`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Features Completed (v1)
+- Responsive layout with Sidebar and TopBar navigation.
+- Dashboard with high-level summaries and trend charts.
+- Detailed Energy Analytics with heatmaps and anomaly tracking.
+- Waste Management tracking and diversion goals.
+- AI Predictions via simulated Python backend endpoints.
+- AI Recommendations with carbon equivalences and PDF report generation.

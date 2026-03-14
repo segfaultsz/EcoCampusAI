@@ -1,87 +1,61 @@
 'use client';
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
-import {
-  LayoutDashboard,
-  Zap,
-  Trash2,
-  Brain,
-  Lightbulb,
-  FileText,
-  ChevronLeft,
-  ChevronRight,
-} from 'lucide-react';
+import { LayoutDashboard, Zap, Trash2, TrendingUp, Lightbulb, FileText, Menu, X, Map } from 'lucide-react';
 
 const navItems = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
-  { name: 'Energy', href: '/energy', icon: Zap },
-  { name: 'Waste', href: '/waste', icon: Trash2 },
-  { name: 'Predictions', href: '/predictions', icon: Brain },
+  { name: 'Energy Analytics', href: '/energy', icon: Zap },
+  { name: 'Waste Management', href: '/waste', icon: Trash2 },
+  { name: 'AI Predictions', href: '/predictions', icon: TrendingUp },
   { name: 'Recommendations', href: '/recommendations', icon: Lightbulb },
+  { name: 'Campus Map', href: '/campus', icon: Map },
   { name: 'Reports', href: '/reports', icon: FileText },
 ];
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const [collapsed, setCollapsed] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <aside
-      className={`fixed left-0 top-0 z-40 h-screen bg-dark-900 border-r border-gray-800 transition-all duration-300 ${
-        collapsed ? 'w-[72px]' : 'w-[256px]'
-      }`}
-    >
-      <div className="flex h-full flex-col">
-        {/* Logo */}
-        <div className="flex h-16 items-center justify-center border-b border-gray-800">
-          <span className="text-2xl" title="EcoCampus AI">
-            🌱
-          </span>
-          {!collapsed && (
-            <span className="ml-2 text-lg font-semibold text-primary-400">
-              EcoCampus AI
-            </span>
-          )}
-        </div>
+    <>
+      {/* Mobile Toggle Button */}
+      <button 
+        className="md:hidden fixed top-4 left-4 z-50 p-2 bg-slate-800 text-white rounded-md"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        {isOpen ? <X size={24} suppressHydrationWarning /> : <Menu size={24} suppressHydrationWarning />}
+      </button>
 
-        {/* Nav Links */}
-        <nav className="flex-1 space-y-1 p-4">
+      {/* Sidebar */}
+      <div className={`fixed inset-y-0 left-0 z-40 w-64 bg-slate-900 border-r border-slate-800 transform transition-transform duration-300 ease-in-out md:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className="flex items-center justify-center h-16 border-b border-slate-800">
+          <span className="text-xl font-bold text-primary-400">EcoCampus AI</span>
+        </div>
+        <nav className="p-4 space-y-2">
           {navItems.map((item) => {
+            const Icon = item.icon;
             const isActive = pathname === item.href;
             return (
-              <Link
-                key={item.name}
-                href={item.href}
-                className={`flex items-center rounded-lg px-3 py-2 transition-colors ${
-                  isActive
-                    ? 'bg-primary-900/30 border-l-4 border-primary-500 text-primary-300'
-                    : 'text-gray-400 hover:bg-gray-800 hover:text-gray-200'
-                } ${collapsed ? 'justify-center' : ''}`}
-                title={collapsed ? item.name : undefined}
-              >
-                <item.icon className="h-5 w-5 flex-shrink-0" />
-                {!collapsed && <span className="ml-3">{item.name}</span>}
+              <Link key={item.name} href={item.href} onClick={() => setIsOpen(false)}>
+                <div className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${isActive ? 'bg-primary-600/20 text-primary-400' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}`}>
+                  <Icon size={20} suppressHydrationWarning />
+                  <span className="font-medium">{item.name}</span>
+                </div>
               </Link>
             );
           })}
         </nav>
-
-        {/* Collapse Toggle */}
-        <div className="border-t border-gray-800 p-4">
-          <button
-            onClick={() => setCollapsed(!collapsed)}
-            className="flex w-full items-center justify-center rounded-lg p-2 text-gray-400 hover:bg-gray-800 hover:text-gray-200"
-            title={collapsed ? 'Expand' : 'Collapse'}
-          >
-            {collapsed ? (
-              <ChevronRight className="h-5 w-5" />
-            ) : (
-              <ChevronLeft className="h-5 w-5" />
-            )}
-          </button>
-        </div>
       </div>
-    </aside>
+      
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-30 md:hidden"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+    </>
   );
 }

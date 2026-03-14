@@ -6,7 +6,7 @@ export default function SummaryCard({
   title,
   value,
   unit,
-  icon: Icon,
+  icon,
   trend,
   trendUpIsGood = true,
   color = 'primary',
@@ -46,13 +46,13 @@ export default function SummaryCard({
   };
 
   return (
-    <div className="glass-card p-6">
+    <div className="dashboard-card p-8">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <div
             className={`rounded-full p-3 ${colorClasses[color] || colorClasses.primary}`}
           >
-            <Icon className="h-6 w-6" />
+            {icon}
           </div>
           <div>
             <p className="text-sm text-gray-400">{title}</p>
