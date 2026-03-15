@@ -30,7 +30,9 @@ export default function DiversionGauge() {
     <div className="flex flex-col items-center">
       <div className="relative h-48 w-48">
         <svg className="h-full w-full" viewBox="0 0 100 100">
+          {/* Background circle */}
           <circle cx="50" cy="50" r={radius} fill="none" stroke="#334155" strokeWidth="8" />
+          {/* Foreground arc */}
           <circle
             cx="50"
             cy="50"
