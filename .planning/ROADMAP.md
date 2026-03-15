@@ -11,12 +11,31 @@
 | 5 | Predictions | Complete | 2026-03-13 | 5 |
 | 6 | Recommendations & Reports | Complete | 2026-03-13 | 9 |
 | 7 | Polish & Integration | Complete | 2026-03-13 | 6 |
+| 8 | Data Availability Fixes | Complete | 2026-03-15 | 2 |
 
-**Total:** 7 phases | 42 requirements | 42 mapped (100%)
+**Total:** 8 phases | 44 requirements | 44 mapped (100%)
 
 ---
 
 ## Phase Details
+
+... (rest of phases)
+
+### Phase 8: Data Availability Fixes
+
+**Goal:** Implement backend hourly energy stats and fix AQI data retrieval.
+
+**Requirements:** DASH-01, DASH-03, ENRG-03, INT-02
+
+**Success Criteria:**
+1. Backend provides /api/real/energy/hourly endpoint with actual vs predicted data.
+2. AQI service calculates robust AQI by aggregating all pollutant IDs from data.gov.in.
+3. Next.js API proxy route created for energy hourly data.
+
+**Day:** 8
+
+**Key Deliverables:** Fully functional real-time energy charts and AQI card.
+
 
 ### Phase 1: Setup & Foundation
 
