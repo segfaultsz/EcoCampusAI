@@ -7,29 +7,29 @@
 
 ### Dashboard
 
-- [ ] **DASH-01**: Home page displays 5 summary cards: Total Energy Today, Today's Waste, Carbon Footprint, Monthly Savings, Sustainability Score
-- [ ] **DASH-02**: 24-hour energy trend line chart shows actual consumption with predicted overlay
-- [ ] **DASH-03**: Building-wise energy comparison bar chart displays all buildings
-- [ ] **DASH-04**: Weekly energy trend area chart with forecast confidence band
-- [ ] **DASH-05**: Waste composition donut chart (organic/recyclable/e-waste/general)
-- [ ] **DASH-06**: Quick insights panel shows top 3 AI-generated insights with anomaly alerts and severity badges
+- [x] **DASH-01**: Home page displays 5 summary cards: Total Energy Today, Today's Waste, Carbon Footprint, Monthly Savings, Sustainability Score
+- [x] **DASH-02**: 24-hour energy trend line chart shows actual consumption with predicted overlay
+- [x] **DASH-03**: Building-wise energy comparison bar chart displays all buildings
+- [x] **DASH-04**: Weekly energy trend area chart with forecast confidence band
+- [x] **DASH-05**: Waste composition donut chart (organic/recyclable/e-waste/general)
+- [x] **DASH-06**: Quick insights panel shows top 3 AI-generated insights with anomaly alerts and severity badges
 
 ### Energy
 
-- [ ] **ENRG-01**: Energy analytics page with building selector dropdown and date range picker
-- [ ] **ENRG-02**: Detailed hourly consumption line chart with peak markers
-- [ ] **ENRG-03**: Day-of-week × hour-of-day heatmap (7×24 grid) with color intensity
-- [ ] **ENRG-04**: Peak prediction card shows next predicted peak time, building, and expected kWh
-- [ ] **ENRG-05**: Historical comparison overlay (this week vs last week)
-- [ ] **ENRG-06**: Anomaly timeline displays detected events with timestamps, descriptions, severity badges
+- [x] **ENRG-01**: Energy analytics page with building selector dropdown and date range picker
+- [x] **ENRG-02**: Detailed hourly consumption line chart with peak markers
+- [x] **ENRG-03**: Day-of-week × hour-of-day heatmap (7×24 grid) with color intensity
+- [x] **ENRG-04**: Peak prediction card shows next predicted peak time, building, and expected kWh
+- [x] **ENRG-05**: Historical comparison overlay (this week vs last week)
+- [x] **ENRG-06**: Anomaly timeline displays detected events with timestamps, descriptions, severity badges
 
 ### Waste
 
-- [ ] **WAST-01**: Daily waste collection stacked bar chart by type (organic, recyclable, e-waste, general)
-- [ ] **WAST-02**: Building-wise waste table (sortable columns: building, each type, total)
-- [ ] **WAST-03**: Waste diversion rate gauge chart showing % diverted from landfill (color-coded)
-- [ ] **WAST-04**: Monthly waste trend chart with target line overlay
-- [ ] **WAST-05**: Waste composition pie chart with interactive legend
+- [x] **WAST-01**: Daily waste collection stacked bar chart by type (organic, recyclable, e-waste, general)
+- [x] **WAST-02**: Building-wise waste table (sortable columns: building, each type, total)
+- [x] **WAST-03**: Waste diversion rate gauge chart showing % diverted from landfill (color-coded)
+- [x] **WAST-04**: Monthly waste trend chart with target line overlay
+- [x] **WAST-05**: Waste composition pie chart with interactive legend
 
 ### Predictions
 
@@ -127,23 +127,23 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| DASH-01 | Phase 1 | Pending |
-| DASH-02 | Phase 1 | Pending |
-| DASH-03 | Phase 1 | Pending |
-| DASH-04 | Phase 1 | Pending |
-| DASH-05 | Phase 1 | Pending |
-| DASH-06 | Phase 1 | Pending |
-| ENRG-01 | Phase 2 | Pending |
-| ENRG-02 | Phase 2 | Pending |
-| ENRG-03 | Phase 2 | Pending |
-| ENRG-04 | Phase 2 | Pending |
-| ENRG-05 | Phase 2 | Pending |
-| ENRG-06 | Phase 2 | Pending |
-| WAST-01 | Phase 3 | Pending |
-| WAST-02 | Phase 3 | Pending |
-| WAST-03 | Phase 3 | Pending |
-| WAST-04 | Phase 3 | Pending |
-| WAST-05 | Phase 3 | Pending |
+| DASH-01 | Phase 1 | Complete |
+| DASH-02 | Phase 1 | Complete |
+| DASH-03 | Phase 1 | Complete |
+| DASH-04 | Phase 1 | Complete |
+| DASH-05 | Phase 1 | Complete |
+| DASH-06 | Phase 1 | Complete |
+| ENRG-01 | Phase 2 | Complete |
+| ENRG-02 | Phase 2 | Complete |
+| ENRG-03 | Phase 2 | Complete |
+| ENRG-04 | Phase 2 | Complete |
+| ENRG-05 | Phase 2 | Complete |
+| ENRG-06 | Phase 2 | Complete |
+| WAST-01 | Phase 3 | Complete |
+| WAST-02 | Phase 3 | Complete |
+| WAST-03 | Phase 3 | Complete |
+| WAST-04 | Phase 3 | Complete |
+| WAST-05 | Phase 3 | Complete |
 | PRED-01 | Phase 4 | Pending |
 | PRED-02 | Phase 4 | Pending |
 | PRED-03 | Phase 4 | Pending |

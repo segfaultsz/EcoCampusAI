@@ -5,12 +5,12 @@
 | # | Phase | Goal | Requirements | Success Criteria |
 |---|-------|------|--------------|------------------|
 | 1 | Setup & Foundation | Complete    | 2026-03-12 | 5 |
-| 2 | Dashboard Home | Build summary cards and charts with mock data | DASH-01, DASH-02, DASH-03, DASH-04, DASH-05, DASH-06 | 6 |
-| 3 | Energy Analytics | Complete energy page with filters, heatmap, peak prediction, anomaly timeline | ENRG-01, ENRG-02, ENRG-03, ENRG-04, ENRG-05, ENRG-06 | 6 |
-| 4 | Waste Management | Build waste page with charts, table, diversion gauge, trends | WAST-01, WAST-02, WAST-03, WAST-04, WAST-05 | 5 |
-| 5 | Predictions | AI predictions page with forecast, peak alerts, what-if simulator | PRED-01, PRED-02, PRED-03, PRED-04, PRED-05 | 5 |
-| 6 | Recommendations & Reports | Recommendations cards + Reports page with PDF/CSV export | REC-01, REC-02, REC-03, REC-04, REC-05, RPRT-01, RPRT-02, RPRT-03, RPRT-04 | 9 |
-| 7 | Polish & Integration | Animations, dark/light mode, responsive design, API integration, error handling, accessibility | UI-03, UI-05, UI-06, UI-07, UI-08, INT-01, INT-02, INT-03 | 6 |
+| 2 | Dashboard Home | Complete    | 2026-03-12 | 6 |
+| 3 | Energy Analytics | Complete    | 2026-03-12 | 6 |
+| 4 | Waste Management | Complete    | 2026-03-12 | 5 |
+| 5 | Predictions | Complete | 2026-03-13 | 5 |
+| 6 | Recommendations & Reports | Complete | 2026-03-13 | 9 |
+| 7 | Polish & Integration | Complete | 2026-03-13 | 6 |
 
 **Total:** 7 phases | 42 requirements | 42 mapped (100%)
 
