@@ -139,7 +139,7 @@ async def fetch_aqi() -> dict | None:
         "api-key": DATA_GOV_KEY,
         "format": "json",
         "filters[city]": "Bhubaneswar",
-        "limit": 1
+        "limit": 50
     }
     try:
         async with httpx.AsyncClient(timeout=10) as client:
@@ -148,19 +148,52 @@ async def fetch_aqi() -> dict | None:
             records = r.json().get("records", [])
             if not records:
                 return None
-            rec = records[0]
+            
+            # Group records by station
+            stations = {}
+            for rec in records:
+                s_name = rec.get("station")
+                if not s_name:
+                    continue
+                if s_name not in stations:
+                    stations[s_name] = {"last_update": rec.get("last_update")}
+                
+                p_id = rec.get("pollutant_id")
+                p_avg = rec.get("pollutant_avg")
+                if p_avg and p_avg != "NA":
+                    try:
+                        stations[s_name][p_id] = float(p_avg)
+                    except ValueError:
+                        pass
+
+            if not stations:
+                return None
+            
+            # Pick the first station that has data
+            station_name = list(stations.keys())[0]
+            data = stations[station_name]
+            
+            pm25 = data.get("PM2.5", 0)
+            pm10 = data.get("PM10", 0)
+            # AQI is typically the maximum of the sub-indices (pollutant_avg values)
+            aqi = max([v for k, v in data.items() if isinstance(v, (int, float))], default=0)
+
             row = {
-                "timestamp": rec.get("last_update", ""),
-                "aqi": int(rec.get("pollutant_avg", 0)),
-                "pm25": float(rec.get("pollutant_min", 0)),
-                "pm10": float(rec.get("pollutant_max", 0)),
-                "station_name": rec.get("station", "Bhubaneswar CPCB"),
+                "timestamp": data.get("last_update", ""),
+                "aqi": int(aqi),
+                "pm25": float(pm25),
+                "pm10": float(pm10),
+                "station_name": station_name,
                 "source": "cpcb"
             }
             if HAS_SUPABASE:
-                supabase.table("aqi_readings").upsert([row], on_conflict="timestamp").execute()
+                try:
+                    supabase.table("aqi_readings").upsert([row], on_conflict="timestamp").execute()
+                except Exception:
+                    pass # Non-critical if DB fails
             return row
-    except Exception:
+    except Exception as e:
+        print(f"Error fetching AQI: {e}")
         return None
 
 
