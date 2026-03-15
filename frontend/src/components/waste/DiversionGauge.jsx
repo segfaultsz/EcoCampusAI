@@ -1,13 +1,14 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
-function generateDiversion() {
-  return Math.floor(Math.random() * 60) + 30; // 30-90%
+function generateDiversion(building) {
+  const seed = building ? building.length : 1;
+  return Math.floor(Math.random() * 60 * seed) % 60 + 30; // 30-90%
 }
 
-export default function DiversionGauge() {
+export default function DiversionGauge({ building = 'All Buildings' }) {
   const [value, setValue] = useState(0);
-  const target = generateDiversion();
+  const target = useMemo(() => generateDiversion(building), [building]);
 
   useEffect(() => {
     let start = null;

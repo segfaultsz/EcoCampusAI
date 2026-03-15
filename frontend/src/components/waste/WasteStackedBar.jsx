@@ -1,18 +1,22 @@
 'use client';
+import { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
-function generateData() {
+function generateData(building) {
+  // Use building string length or char codes to pseudo-randomly seed data so it's consistent per building
+  const seed = building ? building.length : 1;
   return Array.from({ length: 30 }, (_, i) => ({
     day: i + 1,
-    organic: Math.floor(Math.random() * 50) + 30,
-    recyclable: Math.floor(Math.random() * 40) + 20,
-    e_waste: Math.floor(Math.random() * 10) + 5,
-    general: Math.floor(Math.random() * 60) + 40,
+    organic: Math.floor(Math.random() * 50 * seed) % 50 + 30,
+    recyclable: Math.floor(Math.random() * 40 * seed) % 40 + 20,
+    e_waste: Math.floor(Math.random() * 10 * seed) % 10 + 5,
+    general: Math.floor(Math.random() * 60 * seed) % 60 + 40,
   }));
 }
 
-export default function WasteStackedBar() {
-  const data = generateData();
+export default function WasteStackedBar({ building = 'All Buildings' }) {
+  const data = useMemo(() => generateData(building), [building]);
+  
   return (
     <ResponsiveContainer width="100%" height={250}>
       <BarChart data={data}>

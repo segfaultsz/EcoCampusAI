@@ -1,18 +1,21 @@
 'use client';
+import { useMemo } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
 const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-function generateData() {
+function generateData(building) {
+  const seed = building ? building.length : 1;
   return months.map((m, i) => ({
     month: m,
-    total: Math.floor(Math.random() * 2000) + 3000 + (i >= 6 ? -500 : 0),
+    total: Math.floor(Math.random() * 2000 * seed) % 2000 + 3000 + (i >= 6 ? -500 : 0),
   }));
 }
 
 const target = 3500;
 
-export default function WasteTrendChart() {
-  const data = generateData();
+export default function WasteTrendChart({ building = 'All Buildings' }) {
+  const data = useMemo(() => generateData(building), [building]);
+  
   return (
     <ResponsiveContainer width="100%" height={250}>
       <LineChart data={data}>
