@@ -31,7 +31,7 @@ export default function WasteTrendChart({ building = 'All Buildings' }) {
           }}
         />
         <Legend />
-        <Line type="monotone" dataKey="total" stroke="#10b981" strokeWidth={2} name="Total Waste (kg)" />
+        <Line type="monotone" dataKey="total" stroke="#F26415" strokeWidth={2} name="Total Waste (kg)" />
         <Line type="monotone" dataKey={() => target} stroke="#f59e0b" strokeDasharray="5 5" name="Target" dot={false} />
       </LineChart>
     </ResponsiveContainer>

@@ -22,7 +22,7 @@ export default function ExportActions({ filters }) {
     <div className="flex gap-3">
       <button 
         onClick={handleCSV}
-        className="flex items-center gap-2 px-4 py-2 bg-slate-800 hover:bg-slate-700 rounded-lg transition-colors border border-slate-600"
+        className="flex items-center gap-2 px-4 py-2 card hover:bg-slate-700 rounded-lg transition-colors "
       >
         <Download size={16} />
         <span className="text-sm font-medium">CSV</span>

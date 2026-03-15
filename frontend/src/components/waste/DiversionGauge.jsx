@@ -25,7 +25,7 @@ export default function DiversionGauge({ building = 'All Buildings' }) {
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (value / 100) * circumference;
-  const color = value >= 60 ? '#10b981' : value >= 40 ? '#f59e0b' : '#ef4444';
+  const color = value >= 60 ? '#F26415' : value >= 40 ? '#f59e0b' : '#ef4444';
 
   return (
     <div className="flex flex-col items-center">

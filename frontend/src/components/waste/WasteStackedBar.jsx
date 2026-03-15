@@ -32,8 +32,8 @@ export default function WasteStackedBar({ building = 'All Buildings' }) {
           }}
         />
         <Legend />
-        <Bar dataKey="organic" stackId="1" fill="#10b981" name="Organic" />
-        <Bar dataKey="recyclable" stackId="1" fill="#3b82f6" name="Recyclable" />
+        <Bar dataKey="organic" stackId="1" fill="#F26415" name="Organic" />
+        <Bar dataKey="recyclable" stackId="1" fill="#3E3E3E" name="Recyclable" />
         <Bar dataKey="e_waste" stackId="1" fill="#f59e0b" name="E-Waste" />
         <Bar dataKey="general" stackId="1" fill="#64748b" name="General" />
       </BarChart>

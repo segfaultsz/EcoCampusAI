@@ -23,11 +23,11 @@ export default function RecommendationCard({ data, onStatusChange }) {
         <div className="grid grid-cols-2 gap-6 mb-4 text-sm">
           <div>
             <div className="text-gray-500">Est. Savings</div>
-            <div className="font-semibold text-green-400">₹{savingsRs.toLocaleString()} /mo</div>
+            <div className="font-semibold text-green-400">â‚¹{savingsRs.toLocaleString()} /mo</div>
             <div className="text-xs text-gray-400">{savingsKwh} kWh</div>
           </div>
           <div>
-            <div className="text-gray-500">CO₂ Reduction</div>
+            <div className="text-gray-500">COâ‚‚ Reduction</div>
             <div className="font-semibold text-primary-400">{co2Reduction} kg</div>
           </div>
         </div>
@@ -37,7 +37,7 @@ export default function RecommendationCard({ data, onStatusChange }) {
         <select 
           value={status} 
           onChange={(e) => onStatusChange(id, e.target.value)}
-          className="w-full bg-slate-800 border border-slate-700 rounded p-2 text-sm focus:outline-none focus:border-primary-500 text-white"
+          className="w-full card border  rounded p-2 text-sm focus:outline-none focus:border-primary-500 text-white"
         >
           <option value="Pending">Pending</option>
           <option value="Implemented">Implemented</option>

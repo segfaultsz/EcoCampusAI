@@ -7,7 +7,7 @@ export default function ReportFilters({ filters, setFilters }) {
         <select 
           value={filters.dateRange} 
           onChange={(e) => setFilters({ ...filters, dateRange: e.target.value })}
-          className="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white"
+          className="w-full card border  rounded-lg p-2 text-white"
         >
           <option>Last 7 Days</option>
           <option>Last 30 Days</option>
@@ -20,7 +20,7 @@ export default function ReportFilters({ filters, setFilters }) {
         <select 
           value={filters.building} 
           onChange={(e) => setFilters({ ...filters, building: e.target.value })}
-          className="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-white"
+          className="w-full card border  rounded-lg p-2 text-white"
         >
           <option>All Buildings</option>
           <option>Science Block</option>

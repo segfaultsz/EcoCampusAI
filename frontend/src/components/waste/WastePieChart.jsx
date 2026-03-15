@@ -2,7 +2,7 @@
 import { useState, useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 
-const COLORS = ['#10b981', '#3b82f6', '#f59e0b', '#64748b'];
+const COLORS = ['#F26415', '#3E3E3E', '#f59e0b', '#64748b'];
 
 function generateData(building) {
   const seed = building ? building.length : 1;

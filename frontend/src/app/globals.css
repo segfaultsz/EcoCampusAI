@@ -73,9 +73,9 @@ html, body {
 .animate-shimmer {
   background: linear-gradient(
     90deg,
-    #1E293B 25%,
-    #334155 50%,
-    #1E293B 75%
+    #111111 25%,
+    #1F1F1F 50%,
+    #111111 75%
   );
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite;
@@ -87,7 +87,7 @@ html, body {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #10B981;
+  background: var(--accent);
 }
 
 .live-indicator::before {
@@ -95,7 +95,7 @@ html, body {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: #10B981;
+  background: var(--accent);
   animation: pulse-ring 1.5s ease-out infinite;
 }
 

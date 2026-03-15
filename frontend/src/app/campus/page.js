@@ -31,12 +31,12 @@ function kwhLabel(kwh) {
 function SolarBar({ solar }) {
   if (!solar) return null
   return (
-    <div className="flex flex-wrap items-center gap-x-6 gap-y-2 bg-[#1E293B]
+    <div className="flex flex-wrap items-center gap-x-6 gap-y-2 card
                     border border-slate-700 rounded-xl px-5 py-3 text-sm animate-fadeIn">
       <div className="flex items-center gap-2">
         <span className="live-indicator"/>
         <span className="text-slate-400">Solar</span>
-        <span className="font-semibold text-white">{solar.irradiance_wm2} W/m²</span>
+        <span className="font-semibold text-white">{solar.irradiance_wm2} W/mÂ²</span>
       </div>
       <div>
         <span className="text-slate-400">Cloud </span>
@@ -44,12 +44,12 @@ function SolarBar({ solar }) {
       </div>
       <div>
         <span className="text-slate-400">Temp </span>
-        <span className="font-semibold text-white">{solar.temp_c}°C</span>
+        <span className="font-semibold text-white">{solar.temp_c}Â°C</span>
       </div>
       <span className="ml-auto text-xs text-slate-500">
         Updated {solar.timestamp
           ? new Date(solar.timestamp).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })
-          : '—'}
+          : 'â€”'}
       </span>
     </div>
   )
@@ -59,7 +59,7 @@ function Leaderboard({ buildings }) {
   if (!buildings?.length) return null
   const sorted = [...buildings].sort((a, b) => (b.consumption_kwh ?? 0) - (a.consumption_kwh ?? 0))
   return (
-    <div className="bg-[#1E293B] border border-slate-700 rounded-xl p-4 animate-fadeIn">
+    <div className="card rounded-xl p-4 animate-fadeIn">
       <h3 className="text-slate-400 text-xs font-medium uppercase tracking-wider mb-3">
         Energy leaderboard
       </h3>
@@ -73,7 +73,7 @@ function Leaderboard({ buildings }) {
             <div key={b.building_id} className="flex items-center gap-3">
               <span className="text-slate-500 text-xs w-4 text-right">{i + 1}</span>
               <span className="text-slate-300 text-xs w-10 shrink-0">
-                {b.buildings?.code ?? '—'}
+                {b.buildings?.code ?? 'â€”'}
               </span>
               <div className="flex-1 h-1.5 bg-slate-700 rounded-full overflow-hidden">
                 <div
@@ -160,7 +160,7 @@ export default function CampusPage() {
                 <hr style="border-color:#334155;margin:0 0 6px"/>
                 <div style="display:flex;align-items:center;gap:8px">
                   <span style="font-size:13px;color:#F1F5F9">
-                    ⚡ <strong>${kwh?.toFixed(1) ?? '—'} kWh</strong>
+                    âš¡ <strong>${kwh?.toFixed(1) ?? 'â€”'} kWh</strong>
                   </span>
                   <span style="
                     background:${color}22;color:${color};
@@ -182,7 +182,7 @@ export default function CampusPage() {
       <div>
         <h1 className="text-2xl font-semibold text-white">Campus map</h1>
         <p className="text-slate-400 text-sm mt-1">
-          Live energy overlay on satellite imagery · hover markers for details
+          Live energy overlay on satellite imagery Â· hover markers for details
         </p>
       </div>
 
@@ -192,10 +192,10 @@ export default function CampusPage() {
         <div className="relative rounded-xl overflow-hidden border border-slate-700"
              style={{ height: 500 }}>
           {loading && (
-            <div className="absolute inset-0 bg-slate-900 flex items-center justify-center z-10">
+            <div className="absolute inset-0 bg-[#0A0A0A] flex items-center justify-center z-10">
               <div className="flex flex-col items-center gap-3">
                 <div className="animate-shimmer h-6 w-40 rounded"/>
-                <p className="text-slate-500 text-sm">Loading campus data…</p>
+                <p className="text-slate-500 text-sm">Loading campus dataâ€¦</p>
               </div>
             </div>
           )}
@@ -208,7 +208,7 @@ export default function CampusPage() {
       <div className="flex flex-wrap gap-5 text-xs text-slate-400">
         {[
           { color: '#10B981', label: 'Low (<150 kWh)' },
-          { color: '#F59E0B', label: 'Medium (150–300 kWh)' },
+          { color: '#F59E0B', label: 'Medium (150â€“300 kWh)' },
           { color: '#EF4444', label: 'High (>300 kWh)' },
         ].map(({ color, label }) => (
           <span key={label} className="flex items-center gap-1.5">

@@ -31,8 +31,8 @@ export default function WeeklyTrendChart() {
           type="monotone"
           dataKey="actual"
           stackId="1"
-          stroke="#10b981"
-          fill="#10b981"
+          stroke="#F26415"
+          fill="#F26415"
           fillOpacity={0.6}
           name="Actual"
         />
@@ -40,8 +40,8 @@ export default function WeeklyTrendChart() {
           type="monotone"
           dataKey="forecast"
           stackId="2"
-          stroke="#3b82f6"
-          fill="#3b82f6"
+          stroke="#3E3E3E"
+          fill="#3E3E3E"
           fillOpacity={0.3}
           name="Forecast"
         />

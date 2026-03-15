@@ -31,7 +31,7 @@ export default function ComparisonChart({ building }) {
         <Line
           type="monotone"
           dataKey="thisWeek"
-          stroke="#10b981"
+          stroke="#F26415"
           strokeWidth={2}
           name="This Week"
         />

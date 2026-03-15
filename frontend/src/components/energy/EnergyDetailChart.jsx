@@ -41,7 +41,7 @@ export default function EnergyDetailChart({ building, dateRange }) {
         <Line
           type="monotone"
           dataKey="consumption"
-          stroke="#10b981"
+          stroke="#F26415"
           strokeWidth={2}
           dot={<PeakDot />}
           name="Actual"
@@ -49,7 +49,7 @@ export default function EnergyDetailChart({ building, dateRange }) {
         <Line
           type="monotone"
           dataKey="predicted"
-          stroke="#3b82f6"
+          stroke="#3E3E3E"
           strokeWidth={2}
           strokeDasharray="5 5"
           dot={false}
