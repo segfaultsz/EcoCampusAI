@@ -31,7 +31,7 @@ def load_weather_df() -> pd.DataFrame:
     rows = [{"ds": pd.to_datetime(k), **v} for k, v in data["hourly"].items()]
     df = pd.DataFrame(rows).sort_values("ds").reset_index(drop=True)
     df["ds"] = df["ds"].dt.tz_localize(None)
-    print(f"Loaded {len(df)} hourly weather rows: {df['ds'].min()} → {df['ds'].max()}")
+    print(f"Loaded {len(df)} hourly weather rows: {df['ds'].min()} -> {df['ds'].max()}")
     return df
 
 

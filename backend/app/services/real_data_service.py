@@ -2,16 +2,28 @@ import httpx
 import os
 import json
 from datetime import date, timedelta
-from supabase import create_client
+
+try:
+    from supabase import create_client
+    HAS_SUPABASE = True
+except ImportError:
+    HAS_SUPABASE = False
+    print("WARNING: supabase package not installed. Solar/AQI DB persistence disabled.")
 
 CAMPUS_LAT = float(os.getenv("CAMPUS_LAT", "20.2961"))
 CAMPUS_LON = float(os.getenv("CAMPUS_LON", "85.8245"))
 DATA_GOV_KEY = os.getenv("DATA_GOV_IN_KEY", "")
 
-supabase = create_client(
-    os.getenv("SUPABASE_URL"),
-    os.getenv("SUPABASE_SERVICE_KEY")
-)
+if HAS_SUPABASE:
+    _url = os.getenv("SUPABASE_URL")
+    _key = os.getenv("SUPABASE_SERVICE_KEY")
+    if _url and _key:
+        supabase = create_client(_url, _key)
+    else:
+        supabase = None
+        HAS_SUPABASE = False
+else:
+    supabase = None
 
 
 async def get_config(key: str, default: str = "") -> str:
@@ -89,25 +101,26 @@ async def fetch_live_solar() -> list[dict]:
         for i, t in enumerate(data["time"])
         if data["shortwave_radiation"][i] is not None
     ]
-    if rows:
+    if rows and HAS_SUPABASE:
         supabase.table("solar_readings").upsert(rows, on_conflict="timestamp").execute()
     return rows
 
 
 async def get_current_solar() -> dict | None:
     """Returns latest solar reading from DB, fetching live if empty."""
-    try:
-        result = (
-            supabase.table("solar_readings")
-            .select("*")
-            .order("timestamp", desc=True)
-            .limit(1)
-            .execute()
-        )
-        if result.data:
-            return result.data[0]
-    except Exception:
-        pass
+    if HAS_SUPABASE:
+        try:
+            result = (
+                supabase.table("solar_readings")
+                .select("*")
+                .order("timestamp", desc=True)
+                .limit(1)
+                .execute()
+            )
+            if result.data:
+                return result.data[0]
+        except Exception:
+            pass
     rows = await fetch_live_solar()
     return rows[0] if rows else None
 
@@ -144,7 +157,8 @@ async def fetch_aqi() -> dict | None:
                 "station_name": rec.get("station", "Bhubaneswar CPCB"),
                 "source": "cpcb"
             }
-            supabase.table("aqi_readings").upsert([row], on_conflict="timestamp").execute()
+            if HAS_SUPABASE:
+                supabase.table("aqi_readings").upsert([row], on_conflict="timestamp").execute()
             return row
     except Exception:
         return None
@@ -152,18 +166,19 @@ async def fetch_aqi() -> dict | None:
 
 async def get_current_aqi() -> dict | None:
     """Returns latest AQI from DB, fetching live if stale (> 1 hour)."""
-    try:
-        result = (
-            supabase.table("aqi_readings")
-            .select("*")
-            .order("timestamp", desc=True)
-            .limit(1)
-            .execute()
-        )
-        if result.data:
-            return result.data[0]
-    except Exception:
-        pass
+    if HAS_SUPABASE:
+        try:
+            result = (
+                supabase.table("aqi_readings")
+                .select("*")
+                .order("timestamp", desc=True)
+                .limit(1)
+                .execute()
+            )
+            if result.data:
+                return result.data[0]
+        except Exception:
+            pass
     return await fetch_aqi()
 
 

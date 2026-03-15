@@ -77,8 +77,10 @@ function generateData() {
   }));
 }
 
+import { useState } from 'react';
+
 export default function WasteStackedBar() {
-  const data = generateData();
+  const [data] = useState(() => generateData());
   return (
     <ResponsiveContainer width="100%" height={250}>
       <BarChart data={data}>
@@ -202,7 +204,7 @@ function generateDiversion() {
 
 export default function DiversionGauge() {
   const [value, setValue] = useState(0);
-  const target = generateDiversion();
+  const [target] = useState(() => generateDiversion());
 
   useEffect(() => {
     let start = null;
@@ -269,10 +271,12 @@ function generateData() {
   }));
 }
 
+import { useState } from 'react';
+
 const target = 3500;
 
 export default function WasteTrendChart() {
-  const data = generateData();
+  const [data] = useState(() => generateData());
   return (
     <ResponsiveContainer width="100%" height={250}>
       <LineChart data={data}>

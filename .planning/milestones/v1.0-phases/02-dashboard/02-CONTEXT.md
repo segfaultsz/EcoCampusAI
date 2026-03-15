@@ -12,7 +12,7 @@ Components to build:
 - Sidebar (collapsible navigation)
 - TopBar (title, building selector, date, notifications, theme toggle)
 - SummaryCard (reusable component with count-up animation)
-- Energy line chart (24-hour trend with actual data)
+- Energy line chart (24-hour trend with mock data)
 - Building bar chart (energy comparison)
 - Weekly area chart with forecast overlay
 - Waste donut chart (composition)
@@ -40,7 +40,7 @@ All data initially mock, matching PRD schema. Layout should be responsive grid.
 - `WasteDonutChart.jsx` — Pie chart with 4 segments
 
 ### Mock Data
-Create `src/lib/mockData.js` later in Phase 7? Actually for now hardcode in components or create a simple mock object. For Phase 2, we can use hardcoded arrays directly in page.js. Structure must match Supabase schema from PRD.
+Create `src/lib/mockData.ts` later in Phase 7? Actually for now hardcode in components or create a simple mock object. For Phase 2, we use hardcoded arrays defined outside components to prevent hydration mismatches. Structure must match Supabase schema from PRD.
 
 ### Styling
 - Use glass-card class for all cards

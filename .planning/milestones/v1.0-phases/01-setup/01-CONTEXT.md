@@ -43,7 +43,7 @@ All work is frontend-only; backend (FastAPI) already exists.
 ### Project Structure
 - `frontend/` as Next.js app
 - Components in `src/components/` with subfolders: layout/, dashboard/, energy/, waste/, predictions/, ui/
-- Utilities in `src/lib/` (supabase.js, api.js, utils.js)
+- Utilities in `src/lib/` (supabase.ts, api.ts, utils.ts)
 - Global styles in `src/styles/globals.css`
 
 All implementation must follow Day 1 tasks from free_model_instructions.md exactly.

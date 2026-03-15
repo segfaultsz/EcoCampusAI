@@ -24,7 +24,7 @@ All using mock data, responsive layout.
 ### Page Structure
 - Route: `/energy`
 - Uses existing Sidebar, TopBar, layout
-- Filters: Building selector (reuse from TopBar state? For now, local state in page), date range picker (use `<input type="date">` or a simple library? Keep simple: two date inputs)
+- Filters: Building selector (needs a single state strategy via Context in future, for now local state in page), date range picker (use `<input type="date">` or a simple library? Keep simple: two date inputs)
 - Charts arranged in logical flow: main consumption chart first, then heatmap, then peak prediction + historical comparison side-by-side, then anomaly timeline
 
 ### Components to Create (in `src/components/energy/`)

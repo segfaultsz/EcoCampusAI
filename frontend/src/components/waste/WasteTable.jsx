@@ -22,7 +22,7 @@ function generateRow() {
   return { organic, recyclable, e_waste, general, total: organic + recyclable + e_waste + general };
 }
 
-export default function WasteTable() {
+export default function WasteTable({ building }) {
   const [sortConfig, setSortConfig] = useState({ key: 'total', dir: 'desc' });
   const rows = buildings.map((b) => ({ ...b, ...generateRow() }));
 

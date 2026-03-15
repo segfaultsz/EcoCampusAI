@@ -29,11 +29,11 @@
   - `.glass-card` utility class with backdrop blur and translucent background
 
 ### 4. Supabase Client Created
-- `src/lib/supabase.js` exports Supabase client using env vars
+- `src/lib/supabase.ts` exports Supabase client using env vars
 - `.env.local` added with placeholders for `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_PYTHON_API_URL`
 
 ### 5. Utility Helpers Created
-- `src/lib/utils.js` exports:
+- `src/lib/utils.ts` exports:
   - `formatNumber`, `formatKWh`, `formatCurrency` (INR), `formatCO2`
   - `getTimeAgo`
   - `cn` for class merging
@@ -51,8 +51,8 @@ frontend/
 │   ├── app/
 │   │   └── globals.css (updated)
 │   └── lib/
-│       ├── supabase.js (created)
-│       └── utils.js (created)
+│       ├── supabase.ts (created)
+│       └── utils.ts (created)
 └── .env.local (created)
 ```
 
@@ -65,9 +65,9 @@ All must-haves from PLAN.md satisfied:
 - ✅ `frontend` directory exists with `package.json`
 - ✅ Tailwind config contains design tokens (primary, accent, dark colors)
 - ✅ `globals.css` imports Inter font and defines `.glass-card`
-- ✅ `src/lib/supabase.js` exports Supabase client
+- ✅ `src/lib/supabase.ts` exports Supabase client
 - ✅ `.env.local` contains Supabase and API URLs
-- ✅ `src/lib/utils.js` exports all helper functions
+- ✅ `src/lib/utils.ts` exports all helper functions
 
 Next.js project compiles successfully. Frontend foundation complete.
 

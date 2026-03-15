@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Query
-from services.real_data_service import (
+from app.services.real_data_service import (
     get_current_solar, fetch_live_solar,
     get_current_aqi,   fetch_aqi,
     get_sunrise_sunset, get_config,

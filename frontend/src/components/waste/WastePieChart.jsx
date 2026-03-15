@@ -1,22 +1,52 @@
 'use client';
+import { useState, useMemo } from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
-
-const data = [
-  { name: 'Organic', value: 35 },
-  { name: 'Recyclable', value: 25 },
-  { name: 'E-Waste', value: 10 },
-  { name: 'General', value: 30 },
-];
 
 const COLORS = ['#10b981', '#3b82f6', '#f59e0b', '#64748b'];
 
-export default function WastePieChart() {
+function generateData(building) {
+  const seed = building ? building.length : 1;
+  const raw = [
+    { name: 'Organic', val: Math.floor(Math.random() * 20 * seed) % 20 + 25 },
+    { name: 'Recyclable', val: Math.floor(Math.random() * 15 * seed) % 15 + 15 },
+    { name: 'E-Waste', val: Math.floor(Math.random() * 10 * seed) % 10 + 5 },
+    { name: 'General', val: Math.floor(Math.random() * 20 * seed) % 20 + 20 },
+  ];
+  const total = raw.reduce((acc, curr) => acc + curr.val, 0);
+  return raw.map((d, i) => ({ 
+    name: d.name, 
+    value: Math.round((d.val / total) * 100), 
+    color: COLORS[i] 
+  }));
+}
+
+export default function WastePieChart({ building = 'All Buildings' }) {
+  const [hiddenSlices, setHiddenSlices] = useState({});
+  const fullData = useMemo(() => generateData(building), [building]);
+  
+  const handleLegendClick = (e) => {
+    const name = e.value;
+    setHiddenSlices(prev => ({ ...prev, [name]: !prev[name] }));
+  };
+
+  const chartData = fullData.map(item => ({
+    ...item,
+    value: hiddenSlices[item.name] ? 0 : item.value
+  }));
+
+  const legendPayload = fullData.map((item) => ({
+    value: item.name,
+    type: 'square',
+    id: item.name,
+    color: hiddenSlices[item.name] ? '#475569' : item.color, // Gray out if hidden
+  }));
+
   return (
     <ResponsiveContainer width="100%" height={250}>
       <PieChart>
-        <Pie data={data} cx="50%" cy="50%" innerRadius={60} outerRadius={80} paddingAngle={5} dataKey="value">
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+        <Pie data={chartData} cx="50%" cy="50%" innerRadius={60} outerRadius={80} paddingAngle={5} dataKey="value">
+          {chartData.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={entry.color} />
           ))}
         </Pie>
         <Tooltip
@@ -28,7 +58,11 @@ export default function WastePieChart() {
           }}
           formatter={(value) => [`${value}%`, '']}
         />
-        <Legend />
+        <Legend 
+          onClick={handleLegendClick} 
+          payload={legendPayload} 
+          wrapperStyle={{ cursor: 'pointer' }} 
+        />
       </PieChart>
     </ResponsiveContainer>
   );

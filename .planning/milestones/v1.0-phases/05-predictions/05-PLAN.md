@@ -90,8 +90,7 @@ export default function ForecastChart() {
         <XAxis dataKey="time" stroke="#94a3b8" interval={23} />
         <YAxis stroke="#94a3b8" />
         <Tooltip contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', color: '#f1f5f9' }} />
-        <Area type="monotone" dataKey="lower" stroke="none" fill="#3b82f6" fillOpacity={0.2} />
-        <Area type="monotone" dataKey="upper" stroke="none" fill="#3b82f6" fillOpacity={0.2} />
+        <Area type="monotone" dataKey={['lower', 'upper']} stroke="none" fill="#3b82f6" fillOpacity={0.2} />
         <Line type="monotone" dataKey="actual" stroke="#10b981" strokeWidth={2} name="Actual" />
         <Line type="monotone" dataKey="predicted" stroke="#3b82f6" strokeWidth={2} strokeDasharray="5 5" name="Predicted" />
       </AreaChart>
@@ -172,7 +171,8 @@ export default function WhatIfSimulator() {
   const [result, setResult] = useState(null);
 
   const simulate = () => {
-    const savingsKwh = Math.floor(acHour * 50 + reduction * 100);
+    const hoursSaved = Math.max(0, 22 - acHour);
+    const savingsKwh = Math.floor(hoursSaved * 50 + reduction * 100);
     const savingsRs = savingsKwh * 10;
     setResult({ savingsKwh, savingsRs });
   };
@@ -208,8 +208,9 @@ export default function WhatIfSimulator() {
       <edit path="frontend/src/components/predictions/ExplanationPanel.jsx">'use client';
 export default function ExplanationPanel() {
   return (
-    <div className="glass-card p-4 text-sm text-gray-300">
-      <p>The forecast predicts a peak on Thursday due to scheduled exam periods increasing occupancy across academic buildings. Historical patterns show a 15% uplift during exams, and current trends align with this expectation. Confidence is higher for weekday peaks compared to weekends.</p>
+    <div className="glass-card p-6">
+      <h3 className="text-lg font-semibold mb-2">AI Analysis</h3>
+      <p className="text-sm text-gray-300">The forecast predicts a peak on Thursday due to scheduled exam periods increasing occupancy across academic buildings. Historical patterns show a 15% uplift during exams, and current trends align with this expectation. Confidence is higher for weekday peaks compared to weekends.</p>
     </div>
   );
 }</edit>

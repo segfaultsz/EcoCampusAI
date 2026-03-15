@@ -60,15 +60,15 @@ frontend/
 │   │   └── page.tsx (replaced)
 │   ├── components/
 │   │   ├── layout/
-│   │   │   ├── Sidebar.jsx
-│   │   │   └── TopBar.jsx
+│   │   │   ├── Sidebar.tsx
+│   │   │   └── TopBar.tsx
 │   │   └── dashboard/
-│   │       ├── SummaryCard.jsx
-│   │       ├── EnergyLineChart.jsx
-│   │       ├── BuildingBarChart.jsx
-│   │       ├── WeeklyTrendChart.jsx
-│   │       ├── WasteDonutChart.jsx
-│   │       └── InsightsPanel.jsx
+│   │       ├── SummaryCard.tsx
+│   │       ├── EnergyLineChart.tsx
+│   │       ├── BuildingBarChart.tsx
+│   │       ├── WeeklyTrendChart.tsx
+│   │       ├── WasteDonutChart.tsx
+│   │       └── InsightsPanel.tsx
 ```
 
 ---
@@ -102,7 +102,7 @@ Launching dev server (`npm run dev`) shows:
 
 ## Notes
 
-- TypeScript was used (create-next-app default) — all components are typed implicitly as `any`-free; no explicit interfaces added yet
+- TypeScript was used (create-next-app default) — components use basic props typing, though some explicit interfaces like `Props` or `FC` might be added in future phases.
 - Chart mockData is static; will move to API in Phase 7
 - Theme toggle currently only affects html class; needs localStorage persistence in Phase 7
 - Building selector not yet connected to data filtering

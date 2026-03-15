@@ -30,7 +30,7 @@ async def fetch_weather():
         ),
         "timezone": "Asia/Kolkata"
     }
-    print(f"Fetching weather: {START_DATE} → {END_DATE}")
+    print(f"Fetching weather: {START_DATE} -> {END_DATE}")
     async with httpx.AsyncClient(timeout=120) as client:
         r = await client.get(url, params=params)
         r.raise_for_status()

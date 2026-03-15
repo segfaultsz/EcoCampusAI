@@ -20,7 +20,7 @@ autonomous: true
     <description>Create Next.js 14 app using create-next-app with TypeScript, Tailwind, App Router, src-dir. Then install required dependencies: recharts, @supabase/supabase-js, lucide-react, date-fns, clsx.</description>
     <commands>
       <command>cd e:\\WorkSpace\\Appathon</command>
-      <command>npx -y create-next-app@latest frontend --typescript no --tailwind --eslint --app --src-dir --import-alias "@/*" --use-npm</command>
+      <command>npx -y create-next-app@latest frontend --typescript --tailwind --eslint --app --src-dir --import-alias "@/*" --use-npm</command>
       <command>cd frontend</command>
       <command>npm install recharts @supabase/supabase-js lucide-react date-fns clsx</command>
     </commands>
@@ -80,12 +80,18 @@ body {
 
   <task id="4">
     <title>Create Supabase Client</title>
-    <description>Create frontend/src/lib/supabase.js to export Supabase client. Also create frontend/.env.local with placeholder environment variables for Supabase and Python API.</description>
+    <description>Create frontend/src/lib/supabase.ts to export Supabase client. Add validation to ensure URLs and keys are present before creation. Also create frontend/.env.local with placeholder environment variables for Supabase and Python API.</description>
     <file_edits>
-      <edit path="frontend/src/lib/supabase.js">import { createClient } from '@supabase/supabase-js';
+      <edit path="frontend/src/lib/supabase.ts">import { createClient } from '@supabase/supabase-js';
+
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-export const supabase = createClient(supabaseUrl, supabaseKey);</edit>
+
+if (!supabaseUrl || !supabaseKey) {
+  console.warn('Missing Supabase environment variables');
+}
+
+export const supabase = createClient(supabaseUrl || '', supabaseKey || '');</edit>
       <edit path="frontend/.env.local">NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
 NEXT_PUBLIC_PYTHON_API_URL=http://localhost:8000</edit>

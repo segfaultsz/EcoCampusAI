@@ -77,10 +77,10 @@ export default function Sidebar() {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`flex items-center rounded-lg px-3 py-2 transition-colors ${
+                className={`flex items-center rounded-lg px-3 py-2 transition-colors border-l-4 ${
                   isActive
-                    ? 'bg-primary-900/30 border-l-4 border-primary-500 text-primary-300'
-                    : 'text-gray-400 hover:bg-gray-800 hover:text-gray-200'
+                    ? 'bg-primary-900/30 border-primary-500 text-primary-300'
+                    : 'border-transparent text-gray-400 hover:bg-gray-800 hover:text-gray-200'
                 } ${collapsed ? 'justify-center' : ''}`}
                 title={collapsed ? item.name : undefined}
               >
@@ -227,13 +227,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className="antialiased">
+      <body className="antialiased flex h-screen overflow-hidden">
         <Sidebar />
-        <TopBar title={pageTitles['/']} /> {/* Will be dynamic per page later */}
-        <main className="ml-[256px] pt-16">
-          {/* ml-64 (256px) for sidebar width, pt-16 for topbar height */}
-          <div className="p-6">{children}</div>
-        </main>
+        <div className="flex-1 flex flex-col min-w-0">
+          <TopBar />
+          <main className="flex-1 overflow-auto bg-[#0F172A]">
+            <div className="p-6">{children}</div>
+          </main>
+        </div>
       </body>
     </html>
   );
@@ -279,7 +280,7 @@ export default function SummaryCard({
   }, [value]);
 
   const trendColor =
-    trendUpIsGood ^ (trend?.[0] === '+')
+    trendUpIsGood === (trend?.[0] === '+')
       ? 'text-green-400'
       : 'text-red-400';
   const trendArrow = trend?.startsWith('+') ? '↑' : '↓';
@@ -335,8 +336,8 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 
 const mockData = Array.from({ length: 24 }, (_, i) => ({
   hour: i,
-  consumption: Math.floor(Math.random() * 200) + 100 + (i > 9 && i < 16 ? 100 : 0),
-  predicted: Math.floor(Math.random() * 180) + 120 + (i > 9 && i < 16 ? 80 : 0),
+  consumption: 150 + (i > 9 && i < 16 ? 100 : 0) + (i % 3) * 10,
+  predicted: 140 + (i > 9 && i < 16 ? 80 : 0) + (i % 4) * 8,
 }));
 
 export default function EnergyLineChart() {

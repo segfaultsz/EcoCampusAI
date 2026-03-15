@@ -2,7 +2,7 @@
 wave: 1
 depends_on: ["02"]
 files_modified:
-  - frontend/src/components/energy/EnergyPage.jsx
+  - frontend/src/app/energy/page.tsx
   - frontend/src/components/energy/EnergyDetailChart.jsx
   - frontend/src/components/energy/HeatmapChart.jsx
   - frontend/src/components/energy/PeakPredictionCard.jsx
@@ -214,7 +214,7 @@ function getColor(value) {
 }
 
 export default function HeatmapChart({ building, dateRange }) {
-  const data = useMemo(generateHeatmapData, []);
+  const data = useMemo(() => generateHeatmapData(), []);
 
   return (
     <div className="overflow-x-auto">
@@ -386,7 +386,7 @@ const mockAnomalies = [
 ];
 
 export default function AnomalyTimeline({ building }) {
-  const filtered = building === 'All' ? mockAnomalies : mockAnomalies.filter(a => a.building === building || building === 'All');
+  const filtered = building === 'All' ? mockAnomalies : mockAnomalies.filter(a => a.building === building);
 
   return (
     <div className="relative">
