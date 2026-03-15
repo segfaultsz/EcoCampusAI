@@ -2,20 +2,20 @@
 import { usePolling, useCountUp } from '@/lib/hooks'
 
 function getAQILevel(aqi) {
-  if (!aqi) return { label: 'No data',   color: 'text-slate-500', bg: 'bg-slate-700', pct: 0 }
-  if (aqi <= 50)  return { label: 'Good',       color: 'text-emerald-400', bg: 'bg-emerald-500', pct: 15  }
-  if (aqi <= 100) return { label: 'Moderate',   color: 'text-yellow-400',  bg: 'bg-yellow-400',  pct: 35  }
-  if (aqi <= 150) return { label: 'Unhealthy (sensitive)', color: 'text-orange-400', bg: 'bg-orange-400', pct: 55  }
-  if (aqi <= 200) return { label: 'Unhealthy',  color: 'text-red-400',    bg: 'bg-red-500',     pct: 75  }
-  return                 { label: 'Hazardous',  color: 'text-red-600',    bg: 'bg-red-700',     pct: 100 }
+  if (!aqi) return { label: 'No data',   color: 'var(--text-secondary)', bg: 'var(--bg-card)', pct: 0 }
+  if (aqi <= 50)  return { label: 'Good',       color: '#10B981', bg: '#10B98120', pct: 15  }
+  if (aqi <= 100) return { label: 'Moderate',   color: '#EAB308',  bg: '#EAB30820',  pct: 35  }
+  if (aqi <= 150) return { label: 'Unhealthy (sensitive)', color: '#F26415', bg: '#F2641520', pct: 55  }
+  if (aqi <= 200) return { label: 'Unhealthy',  color: '#F26415',    bg: '#F2641520',     pct: 75  }
+  return                 { label: 'Hazardous',  color: '#EF4444',    bg: '#EF444420',     pct: 100 }
 }
 
 function Skeleton() {
   return (
-    <div className="bg-[#1E293B] border border-slate-700 rounded-xl p-5 h-36">
-      <div className="animate-shimmer h-4 w-24 rounded mb-3"/>
-      <div className="animate-shimmer h-8 w-16 rounded mb-2"/>
-      <div className="animate-shimmer h-3 w-36 rounded"/>
+    <div className="card" style={{ height: '144px' }}>
+      <div className="animate-shimmer" style={{ height: '16px', width: '96px', borderRadius: '4px', marginBottom: '12px' }}/>
+      <div className="animate-shimmer" style={{ height: '32px', width: '64px', borderRadius: '4px', marginBottom: '8px' }}/>
+      <div className="animate-shimmer" style={{ height: '12px', width: '144px', borderRadius: '4px' }}/>
     </div>
   )
 }
@@ -27,12 +27,12 @@ export default function AQICard() {
   if (loading) return <Skeleton />
 
   if (error) return (
-    <div className="bg-[#1E293B] border border-slate-700 rounded-xl p-5 h-36
-                    flex flex-col justify-between">
-      <span className="text-slate-400 text-sm">Air quality (AQI)</span>
-      <p className="text-slate-500 text-sm">Unavailable — check DATA_GOV_IN_KEY</p>
+    <div className="card" style={{ height: '144px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+      <span style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>Air quality (AQI)</span>
+      <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>Unavailable</p>
       <button onClick={refetch}
-        className="text-xs text-emerald-400 hover:text-emerald-300 transition-colors underline text-left">
+        style={{ color: 'var(--accent)', fontSize:'12px', background:'transparent',
+                 border:'none', cursor:'pointer', padding:0, textDecoration:'underline', textAlign: 'left' }}>
         Retry
       </button>
     </div>
@@ -41,24 +41,23 @@ export default function AQICard() {
   const level = getAQILevel(data?.aqi)
 
   return (
-    <div className="bg-[#1E293B] border border-slate-700 rounded-xl p-5
-                    hover:border-slate-500 transition-all duration-200 animate-fadeIn">
-      <div className="flex justify-between items-center mb-3">
-        <span className="text-slate-400 text-sm font-medium">Air quality (AQI)</span>
-        <div className={`w-2.5 h-2.5 rounded-full ${level.bg}`}/>
+    <div className="card animate-fadeIn">
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+        <span style={{ color: 'var(--text-secondary)', fontSize: '14px', fontWeight: 500 }}>Air quality (AQI)</span>
+        <div style={{ width: '10px', height: '10px', borderRadius: '9999px', background: level.color, boxShadow: `0 0 0 4px ${level.bg}` }}/>
       </div>
 
-      <div className="flex items-end gap-1 mb-1">
-        <span className="text-2xl font-bold text-white">{Math.round(animated)}</span>
-        <span className="text-slate-400 text-sm mb-0.5">AQI</span>
+      <div style={{ display: 'flex', alignItems: 'flex-end', gap: '4px', marginBottom: '4px' }}>
+        <span className="metric-value">{Math.round(animated)}</span>
+        <span style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '2px' }}>AQI</span>
       </div>
 
-      <p className={`text-sm font-medium mb-3 ${level.color}`}>{level.label}</p>
+      <p style={{ fontSize: '14px', fontWeight: 500, marginBottom: '12px', color: level.color }}>{level.label}</p>
 
-      <div className="flex gap-3 text-xs text-slate-400">
+      <div style={{ display: 'flex', gap: '12px', color: 'var(--text-tertiary)', fontSize: '12px' }}>
         <span>PM2.5: {data?.pm25 ?? '—'}</span>
         <span>PM10: {data?.pm10 ?? '—'}</span>
-        <span className="ml-auto opacity-60 truncate max-w-[90px]">
+        <span style={{ marginLeft: 'auto', opacity: 0.6, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '90px' }}>
           {data?.station_name?.replace('Bhubaneswar', 'Bbsr') ?? ''}
         </span>
       </div>

@@ -15,19 +15,19 @@ const SUN_ICON = (
 )
 
 function getLevel(wm2) {
-  if (!wm2) return { label: 'No data', color: 'text-slate-500', bar: 0 }
-  if (wm2 >= 700) return { label: 'Very high',  color: 'text-orange-400', bar: 100 }
-  if (wm2 >= 400) return { label: 'High',       color: 'text-amber-400',  bar: 70  }
-  if (wm2 >= 150) return { label: 'Moderate',   color: 'text-yellow-400', bar: 40  }
-  return              { label: 'Low',         color: 'text-blue-400',   bar: 15  }
+  if (!wm2) return { label: 'No data', color: 'var(--text-secondary)', bar: 0 }
+  if (wm2 >= 700) return { label: 'Very high',  color: '#F26415', bar: 100 }
+  if (wm2 >= 400) return { label: 'High',       color: '#F26415', bar: 70  }
+  if (wm2 >= 150) return { label: 'Moderate',   color: '#D2D2D2', bar: 40  }
+  return              { label: 'Low',         color: '#8A8A8A', bar: 15  }
 }
 
 function SkeletonCard() {
   return (
-    <div className="bg-[#1E293B] border border-slate-700 rounded-xl p-5 h-36">
-      <div className="animate-shimmer h-4 w-32 rounded mb-3"/>
-      <div className="animate-shimmer h-8 w-24 rounded mb-2"/>
-      <div className="animate-shimmer h-3 w-40 rounded"/>
+    <div className="card" style={{ height: '144px' }}>
+      <div className="animate-shimmer" style={{ height: '16px', width: '128px', borderRadius: '4px', marginBottom: '12px' }}/>
+      <div className="animate-shimmer" style={{ height: '32px', width: '96px', borderRadius: '4px', marginBottom: '8px' }}/>
+      <div className="animate-shimmer" style={{ height: '12px', width: '160px', borderRadius: '4px' }}/>
     </div>
   )
 }
@@ -39,16 +39,15 @@ export default function SolarCard() {
   if (loading) return <SkeletonCard />
 
   if (error) return (
-    <div className="bg-[#1E293B] border border-slate-700 rounded-xl p-5 h-36
-                    flex flex-col justify-between">
-      <div className="flex justify-between items-center">
-        <span className="text-slate-400 text-sm">Solar Irradiance</span>
-        <span className="text-amber-400">{SUN_ICON}</span>
+    <div className="card" style={{ height: '144px', display: 'flex', flexDirection: 'col', justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <span style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>Solar Irradiance</span>
+        <span style={{ color: 'var(--text-secondary)' }}>{SUN_ICON}</span>
       </div>
-      <p className="text-slate-500 text-sm">Data unavailable</p>
+      <p style={{ color: 'var(--text-secondary)', fontSize: '14px' }}>Data unavailable</p>
       <button onClick={refetch}
-        className="text-xs text-emerald-400 hover:text-emerald-300 transition-colors
-                   underline underline-offset-2 text-left">
+        style={{ color: 'var(--accent)', fontSize:'12px', background:'transparent',
+                 border:'none', cursor:'pointer', padding:0, textDecoration:'underline', textAlign: 'left' }}>
         Retry
       </button>
     </div>
@@ -60,37 +59,35 @@ export default function SolarCard() {
     : ''
 
   return (
-    <div className="bg-[#1E293B] border border-slate-700 rounded-xl p-5
-                    hover:border-slate-500 transition-all duration-200 animate-fadeIn">
-      <div className="flex justify-between items-center mb-3">
-        <span className="text-slate-400 text-sm font-medium">Solar irradiance</span>
-        <div className="flex items-center gap-2">
+    <div className="card animate-fadeIn">
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+        <span style={{ color: 'var(--text-secondary)', fontSize: '14px', fontWeight: 500 }}>Solar irradiance</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <span className="live-indicator"/>
-          <span className="text-amber-400">{SUN_ICON}</span>
+          <span style={{ color: 'var(--accent)' }}>{SUN_ICON}</span>
         </div>
       </div>
 
-      <div className="flex items-end gap-1 mb-1">
-        <span className="text-2xl font-bold text-white">
+      <div style={{ display: 'flex', alignItems: 'flex-end', gap: '4px', marginBottom: '4px' }}>
+        <span className="metric-value">
           {Math.round(animated)}
         </span>
-        <span className="text-slate-400 text-sm mb-0.5">W/m²</span>
+        <span style={{ color: 'var(--text-secondary)', fontSize: '14px', marginBottom: '2px' }}>W/m²</span>
       </div>
 
-      <div className="flex items-center gap-2 mb-3">
-        <span className={`text-sm font-medium ${level.color}`}>{level.label}</span>
-        <div className="flex-1 h-1.5 bg-slate-700 rounded-full overflow-hidden">
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+        <span style={{ fontSize: '14px', fontWeight: 500, color: level.color }}>{level.label}</span>
+        <div style={{ flex: 1, height: '6px', background: 'var(--border)', borderRadius: '9999px', overflow: 'hidden' }}>
           <div
-            className="h-full bg-amber-400 rounded-full transition-all duration-1000"
-            style={{ width: `${level.bar}%` }}
+            style={{ height: '100%', background: 'var(--accent)', borderRadius: '9999px', transition: 'all 1s', width: `${level.bar}%` }}
           />
         </div>
       </div>
 
-      <div className="flex gap-3 text-xs text-slate-400">
+      <div style={{ display: 'flex', gap: '12px', color: 'var(--text-tertiary)', fontSize: '12px' }}>
         <span>☁ {data?.cloud_cover_pct ?? '—'}%</span>
         <span>🌡 {data?.temp_c ?? '—'}°C</span>
-        <span className="ml-auto opacity-60">{updated}</span>
+        <span style={{ marginLeft: 'auto', color: 'var(--text-tertiary)', fontSize: '11px' }}>{updated}</span>
       </div>
     </div>
   )
