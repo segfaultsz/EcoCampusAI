@@ -10,6 +10,7 @@ export default function SummaryCard({
   trend,
   trendUpIsGood = true,
   color = 'primary',
+  subRows,
 }) {
   const [displayValue, setDisplayValue] = useState(0);
   const targetValue = useRef(value);
@@ -31,47 +32,68 @@ export default function SummaryCard({
     requestAnimationFrame(animate);
   }, [value]);
 
-  const trendColor =
-    trendUpIsGood ^ (trend?.startsWith('+'))
-      ? 'text-green-400'
-      : 'text-red-400';
-  const trendArrow = trend?.startsWith('+') ? '↑' : '↓';
+  const isPositiveStatus = trendUpIsGood ? !trend?.startsWith('-') : trend?.startsWith('-');
+  const arrowStr = trend?.startsWith('-') ? '↓' : '↑';
+  const cleanTrend = trend?.replace(/^[+-]/, '');
 
-  const colorClasses = {
-    primary: 'bg-primary-500/20 text-primary-400',
-    accent: 'bg-accent-500/20 text-accent-400',
-    green: 'bg-green-500/20 text-green-400',
-    yellow: 'bg-yellow-500/20 text-yellow-400',
-    red: 'bg-red-500/20 text-red-400',
-  };
+  const formattedValue = typeof displayValue === 'number'
+    ? displayValue.toLocaleString('en-IN', { maximumFractionDigits: 1 })
+    : displayValue;
 
   return (
-    <div className="dashboard-card p-8">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <div
-            className={`rounded-full p-3 ${colorClasses[color] || colorClasses.primary}`}
-          >
-            {icon}
-          </div>
-          <div>
-            <p className="text-sm text-gray-400">{title}</p>
-            <p className="text-2xl font-bold">
-              {typeof displayValue === 'number'
-                ? displayValue.toLocaleString('en-IN', {
-                    maximumFractionDigits: 1,
-                  })
-                : displayValue}{' '}
-              {unit}
-            </p>
-          </div>
-        </div>
-        {trend && (
-          <span className={cn('text-sm font-medium', trendColor)}>
-            {trendArrow} {trend.slice(1)}
-          </span>
+    <div className="card" style={{ position:'relative', minHeight:'120px',
+                                   display:'flex', flexDirection:'column',
+                                   justifyContent:'space-between' }}>
+
+      {/* Top row */}
+      <div style={{ display:'flex', justifyContent:'space-between',
+                    alignItems:'flex-start', marginBottom:'12px' }}>
+        <span className="metric-label">{title}</span>
+        <button className="expand-btn" title="Expand">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" strokeWidth="2">
+            <polyline points="15 3 21 3 21 9"/>
+            <polyline points="9 21 3 21 3 15"/>
+            <line x1="21" y1="3" x2="14" y2="10"/>
+            <line x1="3" y1="21" x2="10" y2="14"/>
+          </svg>
+        </button>
+      </div>
+
+      {/* Main metric */}
+      <div style={{ display:'flex', alignItems:'baseline', gap:'6px',
+                    marginBottom:'8px' }}>
+        <span className="metric-value-lg">{formattedValue}</span>
+        {unit && (
+          <span style={{ fontSize:'14px', color:'var(--text-secondary)',
+                         fontWeight:400 }}>{unit}</span>
         )}
       </div>
+
+      {/* Trend */}
+      {trend && (
+        <div style={{ fontSize:'11px', fontWeight:500,
+                      color: isPositiveStatus ? 'var(--accent)' : '#EF4444',
+                      marginBottom:'8px' }}>
+          {arrowStr} {cleanTrend}
+        </div>
+      )}
+
+      {/* Sub rows */}
+      {subRows && subRows.map((row, i) => (
+        <div key={i} style={{ display:'flex', alignItems:'center',
+                               gap:'8px', marginTop:'4px' }}>
+          <span className={
+            row.color === 'orange' ? 'dot-orange' :
+            row.color === 'white'  ? 'dot-white'  : 'dot-gray'
+          }/>
+          <span style={{ fontSize:'12px', color:'var(--text-secondary)',
+                         flex:1 }}>{row.label}</span>
+          <span style={{ fontSize:'12px', color:'var(--text-primary)',
+                         fontWeight:500 }}>{row.value}</span>
+        </div>
+      ))}
+
     </div>
   );
 }
