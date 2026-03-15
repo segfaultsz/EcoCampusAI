@@ -16,7 +16,7 @@ export default function Home() {
       unit: 'kWh',
       icon: <Zap className="h-6 w-6" />,
       trend: '+12% vs yesterday',
-      trendUpIsGood: false,
+      trendDir: 'down', // meaning it went up but maybe bad for energy? The prompt says trendDir 'up' or 'down'
       color: 'primary',
     },
     {
@@ -25,7 +25,7 @@ export default function Home() {
       unit: 'kg',
       icon: <Trash2 className="h-6 w-6" />,
       trend: '-5% vs last week',
-      trendUpIsGood: false,
+      trendDir: 'up', // down waste is good
       color: 'accent',
     },
     {
@@ -34,7 +34,7 @@ export default function Home() {
       unit: 'kg CO₂',
       icon: <Globe className="h-6 w-6" />,
       trend: '+2% vs last month',
-      trendUpIsGood: false,
+      trendDir: 'down',
       color: 'yellow',
     },
     {
@@ -43,7 +43,7 @@ export default function Home() {
       unit: '₹',
       icon: <DollarSign className="h-6 w-6" />,
       trend: '+8% vs last month',
-      trendUpIsGood: true,
+      trendDir: 'up',
       color: 'green',
     },
     {
@@ -52,15 +52,32 @@ export default function Home() {
       unit: '/100',
       icon: <Leaf className="h-6 w-6" />,
       trend: null,
-      trendUpIsGood: true,
+      trendDir: 'up',
       color: 'primary',
     },
   ];
 
   return (
-    <div className="space-y-6">
+    <div style={{ padding: '28px 28px', minHeight:'100vh', background:'var(--bg-base)' }}>
+      <h1 style={{ fontSize:'28px', fontWeight:600, letterSpacing:'-0.02em',
+                   color:'var(--text-primary)', marginBottom:'4px' }}>
+        Dashboard Overview
+      </h1>
+      <p style={{ fontSize:'13px', color:'var(--text-secondary)',
+                  fontWeight:400 }}>
+        Track your campus sustainability metrics.
+      </p>
+
+      <div style={{ height:'1px', background:'var(--border)', margin:'16px 0 24px' }}/>
+
+      <h2 style={{ fontSize:'11px', fontWeight:400, letterSpacing:'0.08em',
+                   textTransform:'uppercase', color:'var(--text-tertiary)',
+                   marginBottom:'12px', marginTop:'28px' }}>
+        Summary
+      </h2>
+
       {/* Row 1: Summary Cards */}
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(200px,1fr))', gap:'12px', marginBottom:'24px' }}>
         {summaryCards.map((card, idx) => (
           <SummaryCard key={idx} {...card} />
         ))}
@@ -68,32 +85,78 @@ export default function Home() {
         <AQICard />
       </div>
 
+      <h2 style={{ fontSize:'11px', fontWeight:400, letterSpacing:'0.08em',
+                   textTransform:'uppercase', color:'var(--text-tertiary)',
+                   marginBottom:'12px', marginTop:'28px' }}>
+        Charts
+      </h2>
+
       {/* Row 2: Charts */}
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <div className="dashboard-card p-8">
-          <h2 className="mb-4 text-xl font-semibold tracking-tight">24-Hour Energy Trend</h2>
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(12, 1fr)', gap:'12px', marginBottom:'12px' }}>
+        <div className="card" style={{ gridColumn: 'span 6' }}>
+          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'16px' }}>
+            <span className="metric-label">24-Hour Energy Trend</span>
+            <button className="expand-btn">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="21" y1="3" x2="14" y2="10"/>
+              </svg>
+            </button>
+          </div>
           <EnergyLineChart buildingCode="ALL" />
         </div>
-        <div className="dashboard-card p-8">
-          <h2 className="mb-4 text-xl font-semibold tracking-tight">Building Energy Comparison</h2>
+        
+        <div className="card" style={{ gridColumn: 'span 6' }}>
+          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'16px' }}>
+            <span className="metric-label">Building Energy Comparison</span>
+            <button className="expand-btn">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="21" y1="3" x2="14" y2="10"/>
+              </svg>
+            </button>
+          </div>
           <BuildingBarChart />
         </div>
       </div>
 
       {/* Row 3: Charts */}
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <div className="dashboard-card p-8">
-          <h2 className="mb-4 text-xl font-semibold tracking-tight">Weekly Energy Trend with Forecast</h2>
+      <div style={{ display:'grid', gridTemplateColumns:'repeat(12, 1fr)', gap:'12px', marginBottom:'12px' }}>
+        <div className="card" style={{ gridColumn: 'span 6' }}>
+          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'16px' }}>
+            <span className="metric-label">Weekly Energy Trend with Forecast</span>
+            <button className="expand-btn">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="21" y1="3" x2="14" y2="10"/>
+              </svg>
+            </button>
+          </div>
           <WeeklyTrendChart />
         </div>
-        <div className="dashboard-card p-8">
-          <h2 className="mb-4 text-xl font-semibold tracking-tight">Waste Composition</h2>
+        
+        <div className="card" style={{ gridColumn: 'span 6' }}>
+          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'16px' }}>
+            <span className="metric-label">Waste Composition</span>
+            <button className="expand-btn">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <polyline points="15 3 21 3 21 9"/>
+                <line x1="21" y1="3" x2="14" y2="10"/>
+              </svg>
+            </button>
+          </div>
           <WasteDonutChart />
         </div>
       </div>
 
+      <h2 style={{ fontSize:'11px', fontWeight:400, letterSpacing:'0.08em',
+                   textTransform:'uppercase', color:'var(--text-tertiary)',
+                   marginBottom:'12px', marginTop:'28px' }}>
+        Monitoring
+      </h2>
+
       {/* Row 4: Insights */}
-      <div className="dashboard-card p-8">
+      <div className="card">
         <InsightsPanel />
       </div>
     </div>
