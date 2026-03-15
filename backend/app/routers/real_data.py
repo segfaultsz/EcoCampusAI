@@ -51,3 +51,10 @@ async def historical_weather(
 ):
     rows = await fetch_historical_weather(start, end)
     return {"count": len(rows), "rows": rows[:48]}
+
+
+@router.get("/energy/hourly")
+async def energy_hourly(building: str = Query("ALL", description="Building ID or 'ALL'")):
+    """Returns hourly energy stats (actual, predicted, temp) for the last 24 hours."""
+    from app.services.data_service import get_hourly_stats
+    return await get_hourly_stats(building)
