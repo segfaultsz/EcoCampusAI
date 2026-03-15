@@ -8,29 +8,29 @@ import WastePieChart from '@/components/waste/WastePieChart';
 export default function WastePage() {
   return (
     <div className="space-y-6">
-      <div className="dashboard-card p-8">
-        <h2 className="mb-4 text-xl font-semibold tracking-tight">Daily Waste Collection</h2>
+      <div className="glass-card p-6">
+        <h2 className="mb-4 text-lg font-semibold">Daily Waste Collection</h2>
         <WasteStackedBar />
       </div>
 
-      <div className="dashboard-card p-8">
-        <h2 className="mb-4 text-xl font-semibold tracking-tight">Building-wise Waste</h2>
+      <div className="glass-card p-6">
+        <h2 className="mb-4 text-lg font-semibold">Building-wise Waste</h2>
         <WasteTable />
       </div>
 
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <div className="dashboard-card p-8">
-          <h2 className="mb-4 text-xl font-semibold tracking-tight">Waste Diversion Rate</h2>
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+        <div className="glass-card p-6">
+          <h2 className="mb-4 text-lg font-semibold">Waste Diversion Rate</h2>
           <DiversionGauge />
         </div>
-        <div className="dashboard-card p-8">
-          <h2 className="mb-4 text-xl font-semibold tracking-tight">Monthly Waste Trend</h2>
+        <div className="glass-card p-6">
+          <h2 className="mb-4 text-lg font-semibold">Monthly Waste Trend</h2>
           <WasteTrendChart />
         </div>
       </div>
 
-      <div className="dashboard-card p-8">
-        <h2 className="mb-4 text-xl font-semibold tracking-tight">Waste Composition</h2>
+      <div className="glass-card p-6">
+        <h2 className="mb-4 text-lg font-semibold">Waste Composition</h2>
         <WastePieChart />
       </div>
     </div>
