@@ -123,3 +123,4 @@ From `.planning/config.json`:
 | Wave 3 | Integration & Adjustments | - | - | - |
 | Wave 4 | Dependencies | - | - | - |
 | 1 | Visual Redesign to Meevis-Style Dark Dashboard | 2026-03-15 | 8c5cc4f | [1-visual-redesign-to-meevis-style-dark-das](./quick/1-visual-redesign-to-meevis-style-dark-das/) |
+| 2 | Campus Map Upgrade: Mapbox Standard + 3D + Dynamic Lighting | 2026-03-15 | 1e85fe9 | [2-campus-map-upgrade-mapbox-standard-3d-dy](./quick/2-campus-map-upgrade-mapbox-standard-3d-dy/) |
