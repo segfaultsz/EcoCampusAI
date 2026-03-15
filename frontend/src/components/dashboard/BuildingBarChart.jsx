@@ -18,18 +18,24 @@ export default function BuildingBarChart() {
   return (
     <ResponsiveContainer width="100%" height={250}>
       <BarChart data={buildings} layout="vertical">
-        <CartesianGrid strokeDasharray="3 3" stroke="#334155" horizontal />
-        <XAxis type="number" stroke="#94a3b8" />
-        <YAxis dataKey="name" type="category" stroke="#94a3b8" width={40} />
+        <CartesianGrid stroke="#1F1F1F" strokeDasharray="0" horizontal />
+        <XAxis type="number" tick={{ fill: '#4A4A4A', fontSize: 11, fontFamily: 'Urbanist' }} axisLine={{ stroke: '#1F1F1F' }} tickLine={false} />
+        <YAxis dataKey="name" type="category" tick={{ fill: '#4A4A4A', fontSize: 11, fontFamily: 'Urbanist' }} axisLine={{ stroke: '#1F1F1F' }} tickLine={false} width={40} />
         <Tooltip
           contentStyle={{
-            backgroundColor: '#1e293b',
-            borderColor: '#334155',
+            background: '#111111',
+            border: '1px solid #1F1F1F',
             borderRadius: '8px',
-            color: '#f1f5f9',
+            color: '#FFFFFF',
+            fontSize: '12px',
+            fontFamily: 'Urbanist',
+            padding: '10px 14px',
+            boxShadow: 'none'
           }}
+          labelStyle={{ color: '#8A8A8A', marginBottom: '6px', fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.06em' }}
+          cursor={{ fill: '#1F1F1F' }}
         />
-        <Bar dataKey="energy" fill="#10b981" radius={[0, 4, 4, 0]} />
+        <Bar dataKey="energy" fill="#F26415" fillOpacity={0.85} radius={[0, 4, 4, 0]} />
       </BarChart>
     </ResponsiveContainer>
   );

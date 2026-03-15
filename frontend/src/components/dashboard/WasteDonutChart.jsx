@@ -8,7 +8,7 @@ const data = [
   { name: 'General', value: 110 },
 ];
 
-const COLORS = ['#10b981', '#3b82f6', '#f59e0b', '#64748b'];
+const COLORS = ['#F26415', '#3E3E3E', '#1F1F1F', '#D2D2D2'];
 
 export default function WasteDonutChart() {
   return (
@@ -22,6 +22,8 @@ export default function WasteDonutChart() {
           outerRadius={80}
           paddingAngle={5}
           dataKey="value"
+          stroke="#0A0A0A"
+          strokeWidth={2}
         >
           {data.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -29,13 +31,18 @@ export default function WasteDonutChart() {
         </Pie>
         <Tooltip
           contentStyle={{
-            backgroundColor: '#1e293b',
-            borderColor: '#334155',
+            background: '#111111',
+            border: '1px solid #1F1F1F',
             borderRadius: '8px',
-            color: '#f1f5f9',
+            color: '#FFFFFF',
+            fontSize: '12px',
+            fontFamily: 'Urbanist',
+            padding: '10px 14px',
+            boxShadow: 'none'
           }}
+          itemStyle={{ color: '#FFFFFF' }}
         />
-        <Legend />
+        <Legend wrapperStyle={{ fontSize: '11px', color: '#8A8A8A', fontFamily: 'Urbanist', paddingTop: '12px' }} />
       </PieChart>
     </ResponsiveContainer>
   );

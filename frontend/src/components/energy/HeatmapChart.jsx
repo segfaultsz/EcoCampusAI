@@ -17,9 +17,10 @@ function generateHeatmapData() {
 }
 
 function getColor(value) {
-  if (value < 40) return 'bg-green-600';
-  if (value < 70) return 'bg-yellow-600';
-  return 'bg-red-600';
+  // Interpolation: low = '#1A1A1A', mid = '#7A3008', high = '#F26415'
+  if (value < 40) return '#1A1A1A';
+  if (value < 70) return '#7A3008';
+  return '#F26415';
 }
 
 export default function HeatmapChart({ building, dateRange }) {
@@ -32,26 +33,26 @@ export default function HeatmapChart({ building, dateRange }) {
         <div className="flex">
           <div className="w-16 flex-shrink-0"></div>
           {Array.from({ length: 24 }).map((_, h) => (
-            <div key={h} className="w-8 flex-shrink-0 text-center text-xs text-gray-400">
+            <div key={h} className="w-8 flex-shrink-0 text-center text-xs text-[#4A4A4A] font-['Urbanist']">
               {h}
             </div>
           ))}
         </div>
         {data.map((row) => (
           <div key={row.day} className="flex items-center">
-            <div className="w-16 flex-shrink-0 text-sm font-medium text-gray-300">{row.day}</div>
+            <div className="w-16 flex-shrink-0 text-xs font-medium text-[#8A8A8A] font-['Urbanist']">{row.day}</div>
             {row.hours.map((val, h) => (
-              <div key={h} className={`h-6 w-8 border border-gray-800 ${getColor(val)}`} title={`${row.day} ${h}:00 — ${val}%`}></div>
+              <div key={h} style={{ backgroundColor: getColor(val), border: '1px solid #0A0A0A', borderRadius: '3px' }} className="h-6 w-8" title={`${row.day} ${h}:00 — ${val}%`}></div>
             ))}
           </div>
         ))}
       </div>
-      <div className="mt-2 flex items-center justify-end space-x-4 text-xs text-gray-400">
+      <div className="mt-2 flex items-center justify-end space-x-4 text-xs text-[#8A8A8A] font-['Urbanist']">
         <span>Low</span>
         <div className="flex space-x-1">
-          <div className="h-4 w-4 bg-green-600"></div>
-          <div className="h-4 w-4 bg-yellow-600"></div>
-          <div className="h-4 w-4 bg-red-600"></div>
+          <div className="h-4 w-4 rounded-sm" style={{ backgroundColor: '#1A1A1A', border: '1px solid #0A0A0A' }}></div>
+          <div className="h-4 w-4 rounded-sm" style={{ backgroundColor: '#7A3008', border: '1px solid #0A0A0A' }}></div>
+          <div className="h-4 w-4 rounded-sm" style={{ backgroundColor: '#F26415', border: '1px solid #0A0A0A' }}></div>
         </div>
         <span>High</span>
       </div>
