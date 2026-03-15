@@ -23,20 +23,20 @@ export default function RecommendationsPage() {
   const totalCo2 = implementedRecs.reduce((sum, r) => sum + r.co2Reduction, 0);
 
   return (
-    <div className="space-y-6">
+    <div style={{ padding:'28px', minHeight:'100vh', background:'var(--bg-base)' }} className="space-y-6">
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <div className="dashboard-card p-8">
-          <h2 className="mb-4 text-xl font-semibold tracking-tight">Savings Tracker</h2>
+        <div className="card">
+          <h2 style={{ color: 'var(--text-primary)', fontSize: '16px', fontWeight: 600, marginBottom: '16px' }}>Savings Tracker</h2>
           <SavingsSummary totalSavingsRs={totalSavingsRs} />
         </div>
-        <div className="dashboard-card p-8">
-          <h2 className="mb-4 text-xl font-semibold tracking-tight">Carbon Impact</h2>
+        <div className="card">
+          <h2 style={{ color: 'var(--text-primary)', fontSize: '16px', fontWeight: 600, marginBottom: '16px' }}>Carbon Impact</h2>
           <CarbonImpact totalCo2={totalCo2} />
         </div>
       </div>
 
-      <div className="space-y-4">
-        <h2 className="text-xl font-bold">Active Recommendations</h2>
+      <div className="space-y-4 mt-8">
+        <h2 style={{ color: 'var(--text-primary)', fontSize: '20px', fontWeight: 600, marginBottom: '16px' }}>Active Recommendations</h2>
         <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
           {recs.map(rec => (
             <RecommendationCard key={rec.id} data={rec} onStatusChange={handleStatusChange} />

@@ -9,14 +9,33 @@ import WastePieChart from '@/components/waste/WastePieChart';
 export default function WastePage() {
   const [building, setBuilding] = useState('All Buildings');
 
+  const inputStyle = {
+    background: 'var(--bg-card)',
+    border: '1px solid var(--border)',
+    borderRadius: '8px',
+    color: 'var(--text-primary)',
+    fontSize: '13px',
+    padding: '8px 12px',
+    outline: 'none',
+    fontFamily: 'Urbanist',
+    transition: 'border-color 0.15s'
+  };
+
+  const handleFocus = (e) => e.target.style.borderColor = 'var(--charcoal)';
+  const handleBlur = (e) => e.target.style.borderColor = 'var(--border)';
+
   return (
-    <div className="space-y-6">
+    <div style={{ padding:'28px', minHeight:'100vh', background:'var(--bg-base)' }} className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Waste Management</h1>
+        <h1 style={{ fontSize:'28px', fontWeight:600, letterSpacing:'-0.02em', color:'var(--text-primary)' }}>
+          Waste Management
+        </h1>
         <select
           value={building}
           onChange={(e) => setBuilding(e.target.value)}
-          className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+          style={inputStyle}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         >
           <option value="All Buildings">All Buildings</option>
           <option value="Main Building">Main Building</option>
@@ -27,29 +46,29 @@ export default function WastePage() {
         </select>
       </div>
 
-      <div className="glass-card p-6">
-        <h2 className="mb-4 text-lg font-semibold">Daily Waste Collection</h2>
+      <div className="card">
+        <h2 style={{ color: 'var(--text-primary)', fontSize: '16px', fontWeight: 600, marginBottom: '16px' }}>Daily Waste Collection</h2>
         <WasteStackedBar building={building} />
       </div>
 
-      <div className="glass-card p-6">
-        <h2 className="mb-4 text-lg font-semibold">Building-wise Waste</h2>
+      <div className="card">
+        <h2 style={{ color: 'var(--text-primary)', fontSize: '16px', fontWeight: 600, marginBottom: '16px' }}>Building-wise Waste</h2>
         <WasteTable building={building} />
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <div className="glass-card p-6">
-          <h2 className="mb-4 text-lg font-semibold">Waste Diversion Rate</h2>
+        <div className="card">
+          <h2 style={{ color: 'var(--text-primary)', fontSize: '16px', fontWeight: 600, marginBottom: '16px' }}>Waste Diversion Rate</h2>
           <DiversionGauge building={building} />
         </div>
-        <div className="glass-card p-6">
-          <h2 className="mb-4 text-lg font-semibold">Monthly Waste Trend</h2>
+        <div className="card">
+          <h2 style={{ color: 'var(--text-primary)', fontSize: '16px', fontWeight: 600, marginBottom: '16px' }}>Monthly Waste Trend</h2>
           <WasteTrendChart building={building} />
         </div>
       </div>
 
-      <div className="glass-card p-6">
-        <h2 className="mb-4 text-lg font-semibold">Waste Composition</h2>
+      <div className="card">
+        <h2 style={{ color: 'var(--text-primary)', fontSize: '16px', fontWeight: 600, marginBottom: '16px' }}>Waste Composition</h2>
         <WastePieChart building={building} />
       </div>
     </div>

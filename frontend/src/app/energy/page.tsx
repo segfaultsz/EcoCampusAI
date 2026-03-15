@@ -23,16 +23,37 @@ export default function EnergyPage() {
   const [selectedBuilding, setSelectedBuilding] = useState('All');
   const [dateRange, setDateRange] = useState({ start: '2026-03-05', end: '2026-03-12' });
 
+  const inputStyle = {
+    background: 'var(--bg-card)',
+    border: '1px solid var(--border)',
+    borderRadius: '8px',
+    color: 'var(--text-primary)',
+    fontSize: '13px',
+    padding: '8px 12px',
+    outline: 'none',
+    fontFamily: 'Urbanist',
+    transition: 'border-color 0.15s'
+  };
+
+  const handleFocus = (e) => e.target.style.borderColor = 'var(--charcoal)';
+  const handleBlur = (e) => e.target.style.borderColor = 'var(--border)';
+
   return (
-    <div className="space-y-6">
+    <div style={{ padding:'28px', minHeight:'100vh', background:'var(--bg-base)' }} className="space-y-6">
+      <h1 style={{ fontSize:'28px', fontWeight:600, letterSpacing:'-0.02em', color:'var(--text-primary)', marginBottom:'16px' }}>
+        Energy Analytics
+      </h1>
+
       {/* Filters */}
-      <div className="dashboard-card p-4 flex flex-wrap gap-6 items-center">
+      <div className="card flex flex-wrap gap-6 items-center">
         <div className="flex items-center space-x-2">
-          <label className="text-sm text-gray-400">Building:</label>
+          <label style={{ color: 'var(--text-secondary)', fontSize: '13px' }}>Building:</label>
           <select
             value={selectedBuilding}
             onChange={(e) => setSelectedBuilding(e.target.value)}
-            className="rounded border border-gray-700 bg-dark-800 px-3 py-2 text-gray-200 focus:ring-2 focus:ring-primary-500"
+            style={inputStyle}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
           >
             <option value="All">All Buildings</option>
             {buildings.map((b) => (
@@ -43,50 +64,54 @@ export default function EnergyPage() {
           </select>
         </div>
         <div className="flex items-center space-x-2">
-          <label className="text-sm text-gray-400">From:</label>
+          <label style={{ color: 'var(--text-secondary)', fontSize: '13px' }}>From:</label>
           <input
             type="date"
             value={dateRange.start}
             onChange={(e) => setDateRange({ ...dateRange, start: e.target.value })}
-            className="rounded border border-gray-700 bg-dark-800 px-3 py-2 text-gray-200"
+            style={inputStyle}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
           />
-          <label className="text-sm text-gray-400">To:</label>
+          <label style={{ color: 'var(--text-secondary)', fontSize: '13px' }}>To:</label>
           <input
             type="date"
             value={dateRange.end}
             onChange={(e) => setDateRange({ ...dateRange, end: e.target.value })}
-            className="rounded border border-gray-700 bg-dark-800 px-3 py-2 text-gray-200"
+            style={inputStyle}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
           />
         </div>
       </div>
 
       {/* Main Chart */}
-      <div className="dashboard-card p-8">
-        <h2 className="mb-4 text-xl font-semibold tracking-tight">Hourly Consumption</h2>
+      <div className="card">
+        <h2 style={{ color: 'var(--text-primary)', fontSize: '16px', fontWeight: 600, marginBottom: '16px' }}>Hourly Consumption</h2>
         <EnergyDetailChart building={selectedBuilding} dateRange={dateRange} />
       </div>
 
       {/* Heatmap */}
-      <div className="dashboard-card p-8">
-        <h2 className="mb-4 text-xl font-semibold tracking-tight">Usage Heatmap (Day × Hour)</h2>
+      <div className="card">
+        <h2 style={{ color: 'var(--text-primary)', fontSize: '16px', fontWeight: 600, marginBottom: '16px' }}>Usage Heatmap (Day × Hour)</h2>
         <HeatmapChart building={selectedBuilding} dateRange={dateRange} />
       </div>
 
       {/* Peak Prediction and Comparison */}
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-        <div className="dashboard-card p-8">
-          <h2 className="mb-4 text-xl font-semibold tracking-tight">Peak Prediction</h2>
+        <div className="card">
+          <h2 style={{ color: 'var(--text-primary)', fontSize: '16px', fontWeight: 600, marginBottom: '16px' }}>Peak Prediction</h2>
           <PeakPredictionCard building={selectedBuilding} />
         </div>
-        <div className="dashboard-card p-8">
-          <h2 className="mb-4 text-xl font-semibold tracking-tight">Historical Comparison</h2>
+        <div className="card">
+          <h2 style={{ color: 'var(--text-primary)', fontSize: '16px', fontWeight: 600, marginBottom: '16px' }}>Historical Comparison</h2>
           <ComparisonChart building={selectedBuilding} />
         </div>
       </div>
 
       {/* Anomaly Timeline */}
-      <div className="dashboard-card p-8">
-        <h2 className="mb-4 text-xl font-semibold tracking-tight">Detected Anomalies</h2>
+      <div className="card">
+        <h2 style={{ color: 'var(--text-primary)', fontSize: '16px', fontWeight: 600, marginBottom: '16px' }}>Detected Anomalies</h2>
         <AnomalyTimeline building={selectedBuilding} />
       </div>
     </div>
