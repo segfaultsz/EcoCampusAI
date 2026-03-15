@@ -212,7 +212,24 @@ async def get_current_aqi() -> dict | None:
                 return result.data[0]
         except Exception:
             pass
-    return await fetch_aqi()
+
+    live = await fetch_aqi()
+    if live:
+        return live
+
+    # Fallback: return realistic mock AQI data for Bhubaneswar
+    # so the dashboard always renders something useful
+    from datetime import datetime
+    import random
+    base_aqi = random.randint(55, 120)
+    return {
+        "timestamp": datetime.now().isoformat(),
+        "aqi": base_aqi,
+        "pm25": round(base_aqi * 0.4 + random.uniform(-5, 5), 1),
+        "pm10": round(base_aqi * 0.8 + random.uniform(-10, 10), 1),
+        "station_name": "Bhubaneswar (Simulated)",
+        "source": "fallback"
+    }
 
 
 async def get_sunrise_sunset(for_date: str | None = None) -> dict:
