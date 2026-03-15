@@ -116,9 +116,10 @@ From `.planning/config.json`:
 
 ## Quick Tasks Completed
 
-| Task | Status | Description |
-|------|--------|-------------|
-| Wave 1: Backend Services & APIs | ✅ Complete | Created real_data_service.py, I-BLEND script, weather seeder, train_model, fastAPI router and next.js proxy routes |
-| Wave 2: Interactive UI Components | ✅ Complete | Added shared hooks, global animations, SolarCard, AQICard, EnergyLineChart with brush/overlay, Campus map |
-| Wave 3: Integration & Adjustments | ✅ Complete | Updated prophet_model, carbon factor, main.py, dashboard page and sidebar |
-| Wave 4: Dependencies | ✅ Complete | Installed mapbox-gl and recharts, updated backend and frontend env vars |
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| Wave 1 | Backend Services & APIs | - | - | - |
+| Wave 2 | Interactive UI Components | - | - | - |
+| Wave 3 | Integration & Adjustments | - | - | - |
+| Wave 4 | Dependencies | - | - | - |
+| 1 | Visual Redesign to Meevis-Style Dark Dashboard | 2026-03-15 | 8c5cc4f | [1-visual-redesign-to-meevis-style-dark-das](./quick/1-visual-redesign-to-meevis-style-dark-das/) |
