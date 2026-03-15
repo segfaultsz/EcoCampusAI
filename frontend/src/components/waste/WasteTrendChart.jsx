@@ -19,7 +19,14 @@ export default function WasteTrendChart() {
         <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
         <XAxis dataKey="month" stroke="#94a3b8" />
         <YAxis stroke="#94a3b8" />
-        <Tooltip contentStyle={{ backgroundColor: '#1e293b', borderColor: '#334155', borderRadius: '8px', color: '#f1f5f9' }} />
+        <Tooltip
+          contentStyle={{
+            backgroundColor: '#1e293b',
+            borderColor: '#334155',
+            borderRadius: '8px',
+            color: '#f1f5f9',
+          }}
+        />
         <Legend />
         <Line type="monotone" dataKey="total" stroke="#10b981" strokeWidth={2} name="Total Waste (kg)" />
         <Line type="monotone" dataKey={() => target} stroke="#f59e0b" strokeDasharray="5 5" name="Target" dot={false} />
