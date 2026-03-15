@@ -1,32 +1,85 @@
 'use client';
-import { Bell, Sun, Moon } from 'lucide-react';
 import { useState } from 'react';
 
 export default function TopBar() {
-  const [isDark, setIsDark] = useState(true);
+  const [activeTab, setActiveTab] = useState('overview');
 
   return (
-    <header className="h-16 border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-20 flex items-center justify-between px-4 md:px-8">
-      {/* Spacer for mobile hamburger menu */}
-      <div className="w-10 md:hidden"></div>
-      
-      <div className="flex-1">
-        <h1 className="text-xl font-semibold hidden sm:block">Campus Overview</h1>
-      </div>
+    <>
+      <header style={{
+        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50,
+        height: '52px',
+        background: 'var(--bg-base)',
+        borderBottom: '1px solid var(--border)',
+        display: 'flex', alignItems: 'center',
+        padding: '0 24px',
+        gap: '16px'
+      }}>
 
-      <div className="flex items-center space-x-4">
-        <span className="text-sm text-slate-400 hidden sm:block" suppressHydrationWarning>Today: {new Date().toLocaleDateString()}</span>
-        <button className="p-2 text-slate-400 hover:text-white transition-colors relative">
-          <Bell size={20} suppressHydrationWarning />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
-        </button>
-        <button 
-          onClick={() => setIsDark(!isDark)}
-          className="p-2 text-slate-400 hover:text-white transition-colors"
-        >
-          {isDark ? <Sun size={20} suppressHydrationWarning /> : <Moon size={20} suppressHydrationWarning />}
-        </button>
-      </div>
-    </header>
+        {/* LEFT — Brand */}
+        <div style={{ display:'flex', alignItems:'center', gap:'8px', minWidth:'180px' }}>
+          <span style={{ fontSize:'13px', fontWeight:600, color:'var(--text-primary)',
+                         letterSpacing:'0.04em' }}>
+            ecocampus
+          </span>
+          <span style={{ fontSize:'11px', color:'var(--text-secondary)',
+                         fontWeight:400 }}>
+            GreenTech University
+          </span>
+        </div>
+
+        {/* CENTER — Pill tab switcher */}
+        <div style={{ flex:1, display:'flex', justifyContent:'center' }}>
+          <nav className="pill-tab-bar">
+            {['overview','analytics','monitoring'].map(tab => (
+              <button
+                key={tab}
+                className={`pill-tab${activeTab===tab?' active':''}`}
+                onClick={() => setActiveTab(tab)}
+              >
+                {tab.charAt(0).toUpperCase() + tab.slice(1)}
+              </button>
+            ))}
+          </nav>
+        </div>
+
+        {/* RIGHT — Icon buttons */}
+        <div style={{ display:'flex', gap:'8px', minWidth:'180px', justifyContent:'flex-end' }}>
+          {/* Settings */}
+          <button style={{
+            width:'32px', height:'32px', display:'flex', alignItems:'center',
+            justifyContent:'center', background:'var(--bg-card)',
+            border:'1px solid var(--border)', borderRadius:'8px',
+            color:'var(--text-secondary)', cursor:'pointer', transition:'all 0.15s'
+          }}
+            onMouseEnter={e => e.currentTarget.style.borderColor='var(--charcoal)'}
+            onMouseLeave={e => e.currentTarget.style.borderColor='var(--border)'}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" strokeWidth="1.5">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/>
+            </svg>
+          </button>
+          {/* Refresh / logout */}
+          <button style={{
+            width:'32px', height:'32px', display:'flex', alignItems:'center',
+            justifyContent:'center', background:'var(--bg-card)',
+            border:'1px solid var(--border)', borderRadius:'8px',
+            color:'var(--text-secondary)', cursor:'pointer', transition:'all 0.15s'
+          }}
+            onMouseEnter={e => e.currentTarget.style.borderColor='var(--charcoal)'}
+            onMouseLeave={e => e.currentTarget.style.borderColor='var(--border)'}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" strokeWidth="1.5">
+              <polyline points="23 4 23 10 17 10"/>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+            </svg>
+          </button>
+        </div>
+
+      </header>
+    </>
   );
 }
