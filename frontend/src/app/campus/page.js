@@ -130,204 +130,198 @@ export default function CampusPage() {
     if (!mapboxReady || !mapRef.current || mapInstanceRef.current) return
 
     const mapboxgl = window._mapboxgl
-    mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_TOKEN
+    const token = process.env.NEXT_PUBLIC_MAPBOX_TOKEN
 
-    // —— 1. Initialise with Mapbox Standard style ——————————————————————————
-    const map = new mapboxgl.Map({
-      container:  mapRef.current,
-      style:      'mapbox://styles/mapbox/standard',   // Standard — NOT satellite    
-      center:     CAMPUS_CENTER,
-      zoom:       15.5,
-      pitch:      55,          // tilted view shows 3D buildings well
-      bearing:    -15,
-      antialias:  true,        // required for smooth 3D building edges
-    })
+    // Guard: if no token, skip map init — the UI will show a fallback message
+    if (!token) {
+      console.warn('NEXT_PUBLIC_MAPBOX_TOKEN is not set — campus map disabled')
+      return
+    }
 
-    mapInstanceRef.current = map
+    mapboxgl.accessToken = token
 
-    // —— 2. Controls ———————————————————————————————————————————————————————
-    map.addControl(new mapboxgl.NavigationControl({ visualizePitch: true }), 'top-right')
-    map.addControl(new mapboxgl.FullscreenControl(), 'top-right')
-
-    // —— 3. Apply Standard style config immediately (before load) ——————————
-    // Theme: 'monochrome' makes the basemap near-black, perfect for dark dashboard     
-    // lightPreset: drives the entire lighting rig — 'night' for dramatic 3D
-    map.on('style.load', () => {
-
-      // --- Dark monochrome basemap ---
-      map.setConfigProperty('basemap', 'theme', 'monochrome')
-      map.setConfigProperty('basemap', 'lightPreset', 'night')
-
-      // --- Enable all landmark 3D buildings (Standard style built-in) ---
-      // Standard style renders 3D buildings natively — no custom layer needed.       
-      // Show POI labels for campus landmarks:
-      map.setConfigProperty('basemap', 'showPointOfInterestLabels', true)
-      map.setConfigProperty('basemap', 'showTransitLabels', false)
-      map.setConfigProperty('basemap', 'showPlaceLabels', true)
-      map.setConfigProperty('basemap', 'showRoadLabels', false)
-
-      // --- Fog / Atmosphere for depth ---
-      map.setFog({
-        color:            'rgb(10, 10, 10)',      // matches --bg-base
-        'high-color':     'rgb(20, 20, 20)',
-        'horizon-blend':  0.04,
-        'space-color':    'rgb(5, 5, 5)',
-        'star-intensity': 0.6,
+    try {
+      // Use dark-v11 instead of 'standard' to avoid 3D model loading errors
+      // (Standard style requires authenticated model endpoint for oak/tree LOD meshes)
+      const map = new mapboxgl.Map({
+        container:  mapRef.current,
+        style:      'mapbox://styles/mapbox/dark-v11',
+        center:     CAMPUS_CENTER,
+        zoom:       15.5,
+        pitch:      55,
+        bearing:    -15,
+        antialias:  true,
       })
 
-      // —— 4. Add energy consumption heatmap layer ——————————————————————————
-      // Buildings data as GeoJSON — construct from the buildings prop
-      // Each feature has consumption_kwh as a property for color interpolation
-      if (buildings && buildings.length > 0) {
+      mapInstanceRef.current = map
 
-        const geojsonFeatures = buildings
-          .filter(b => BUILDING_COORDS[b.buildings?.code])
-          .map(b => ({
-            type: 'Feature',
-            geometry: {
-              type: 'Point',
-              coordinates: BUILDING_COORDS[b.buildings?.code]
+      // Controls
+      map.addControl(new mapboxgl.NavigationControl({ visualizePitch: true }), 'top-right')
+      map.addControl(new mapboxgl.FullscreenControl(), 'top-right')
+
+      map.on('style.load', () => {
+        // Add 3D building extrusions (works with dark-v11 without model dependency)
+        const layers = map.getStyle().layers
+        const labelLayerId = layers?.find(
+          l => l.type === 'symbol' && l.layout?.['text-field']
+        )?.id
+
+        map.addLayer(
+          {
+            id: 'building-3d',
+            source: 'composite',
+            'source-layer': 'building',
+            filter: ['==', 'extrude', 'true'],
+            type: 'fill-extrusion',
+            minzoom: 14,
+            paint: {
+              'fill-extrusion-color': '#1a1a2e',
+              'fill-extrusion-height': ['get', 'height'],
+              'fill-extrusion-base': ['get', 'min_height'],
+              'fill-extrusion-opacity': 0.7,
             },
-            properties: {
-              code:    b.buildings?.code ?? '',
-              name:    b.buildings?.name ?? '',
-              type:    b.buildings?.type ?? '',
-              kwh:     b.consumption_kwh ?? 0,
-              color:   kwhToColor(b.consumption_kwh),
-              label:   kwhLabel(b.consumption_kwh),
-            }
-          }))
+          },
+          labelLayerId
+        )
 
-        // Add GeoJSON source
-        map.addSource('campus-energy', {
-          type: 'geojson',
-          data: { type: 'FeatureCollection', features: geojsonFeatures }
+        // Fog for depth
+        map.setFog({
+          color:            'rgb(10, 10, 10)',
+          'high-color':     'rgb(20, 20, 20)',
+          'horizon-blend':  0.04,
+          'space-color':    'rgb(5, 5, 5)',
+          'star-intensity': 0.6,
         })
 
-        // Halo glow layer (large, soft, color-coded)
-        map.addLayer({
-          id:     'energy-glow',
-          type:   'circle',
-          source: 'campus-energy',
-          paint: {
-            'circle-radius':       28,
-            'circle-blur':         0.8,
-            'circle-opacity':      0.35,
-            'circle-color': [
-              'interpolate', ['linear'], ['get', 'kwh'],
-              0,   '#10B981',
-              150, '#F59E0B',
-              300, '#EF4444',
-            ],
-          }
-        })
+        // Energy overlay layers (same as before)
+        if (buildings && buildings.length > 0) {
+          const geojsonFeatures = buildings
+            .filter(b => BUILDING_COORDS[b.buildings?.code])
+            .map(b => ({
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: BUILDING_COORDS[b.buildings?.code]
+              },
+              properties: {
+                code:    b.buildings?.code ?? '',
+                name:    b.buildings?.name ?? '',
+                type:    b.buildings?.type ?? '',
+                kwh:     b.consumption_kwh ?? 0,
+                color:   kwhToColor(b.consumption_kwh),
+                label:   kwhLabel(b.consumption_kwh),
+              }
+            }))
 
-        // Core dot layer (sharp center dot, color-coded)
-        map.addLayer({
-          id:     'energy-dots',
-          type:   'circle',
-          source: 'campus-energy',
-          paint: {
-            'circle-radius':        8,
-            'circle-color': [
-              'interpolate', ['linear'], ['get', 'kwh'],
-              0,   '#10B981',
-              150, '#F59E0B',
-              300, '#EF4444',
-            ],
-            'circle-stroke-width':  2,
-            'circle-stroke-color':  '#FFFFFF',
-            'circle-stroke-opacity': 0.9,
-          }
-        })
-
-        // —— 5. Interactive popups on dot click —————————————————————————————
-        map.on('click', 'energy-dots', (e) => {
-          if (!e.features?.length) return
-          const f    = e.features[0]
-          const props = f.properties
-          const coords = e.lngLat
-
-          new mapboxgl.Popup({
-            offset:      20,
-            closeButton: false,
-            maxWidth:    '200px',
+          map.addSource('campus-energy', {
+            type: 'geojson',
+            data: { type: 'FeatureCollection', features: geojsonFeatures }
           })
-            .setLngLat(coords)
-            .setHTML(`
-              <div style="
-                font-family: Urbanist, sans-serif;
-                background: #111111;
-                border: 1px solid #1F1F1F;
-                border-radius: 10px;
-                padding: 12px 14px;
-                color: #FFFFFF;
-              ">
-                <p style="margin:0 0 2px; font-size:13px; font-weight:600;">
-                  ${props.name}
-                </p>
-                <p style="margin:0 0 8px; font-size:11px; color:#8A8A8A;
-                           text-transform:uppercase; letter-spacing:0.05em;">
-                  ${props.type}
-                </p>
-                <div style="display:flex; align-items:center; gap:8px;">
-                  <span style="font-size:20px; font-weight:600;
-                               letter-spacing:-0.02em;">
-                    ${Number(props.kwh).toFixed(1)}
-                  </span>
-                  <span style="font-size:11px; color:#8A8A8A;">kWh</span>
-                  <span style="
-                    margin-left:auto;
-                    background: ${props.color}20;
-                    color: ${props.color};
-                    border-radius: 4px;
-                    padding: 2px 7px;
-                    font-size: 10px;
-                    font-weight: 500;
-                    text-transform: uppercase;
-                    letter-spacing: 0.04em;
-                  ">${props.label}</span>
+
+          map.addLayer({
+            id:     'energy-glow',
+            type:   'circle',
+            source: 'campus-energy',
+            paint: {
+              'circle-radius':  28,
+              'circle-blur':    0.8,
+              'circle-opacity': 0.35,
+              'circle-color': [
+                'interpolate', ['linear'], ['get', 'kwh'],
+                0,   '#10B981',
+                150, '#F59E0B',
+                300, '#EF4444',
+              ],
+            }
+          })
+
+          map.addLayer({
+            id:     'energy-dots',
+            type:   'circle',
+            source: 'campus-energy',
+            paint: {
+              'circle-radius':        8,
+              'circle-color': [
+                'interpolate', ['linear'], ['get', 'kwh'],
+                0,   '#10B981',
+                150, '#F59E0B',
+                300, '#EF4444',
+              ],
+              'circle-stroke-width':  2,
+              'circle-stroke-color':  '#FFFFFF',
+              'circle-stroke-opacity': 0.9,
+            }
+          })
+
+          // Popups
+          map.on('click', 'energy-dots', (e) => {
+            if (!e.features?.length) return
+            const f = e.features[0]
+            const props = f.properties
+            const coords = e.lngLat
+
+            new mapboxgl.Popup({
+              offset: 20,
+              closeButton: false,
+              maxWidth: '200px',
+            })
+              .setLngLat(coords)
+              .setHTML(`
+                <div style="
+                  font-family: Urbanist, sans-serif;
+                  background: #111111;
+                  border: 1px solid #1F1F1F;
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  color: #FFFFFF;
+                ">
+                  <p style="margin:0 0 2px; font-size:13px; font-weight:600;">${props.name}</p>
+                  <p style="margin:0 0 8px; font-size:11px; color:#8A8A8A;
+                     text-transform:uppercase; letter-spacing:0.05em;">${props.type}</p>
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-size:20px; font-weight:600;
+                         letter-spacing:-0.02em;">${Number(props.kwh).toFixed(1)}</span>
+                    <span style="font-size:11px; color:#8A8A8A;">kWh</span>
+                    <span style="
+                      margin-left:auto;
+                      background: ${props.color}20;
+                      color: ${props.color};
+                      border-radius: 4px;
+                      padding: 2px 7px;
+                      font-size: 10px;
+                      font-weight: 500;
+                      text-transform: uppercase;
+                      letter-spacing: 0.04em;
+                    ">${props.label}</span>
+                  </div>
                 </div>
-              </div>
-            `)
-            .addTo(map)
-        })
+              `)
+              .addTo(map)
+          })
 
-        // Pointer cursor on hover
-        map.on('mouseenter', 'energy-dots', () => {
-          map.getCanvas().style.cursor = 'pointer'
-        })
-        map.on('mouseleave', 'energy-dots', () => {
-          map.getCanvas().style.cursor = ''
-        })
-      }
+          map.on('mouseenter', 'energy-dots', () => {
+            map.getCanvas().style.cursor = 'pointer'
+          })
+          map.on('mouseleave', 'energy-dots', () => {
+            map.getCanvas().style.cursor = ''
+          })
+        }
+      })
 
-      // —— 6. Dynamic lighting — auto-cycle based on time of day ——————————
-      // Determine IST hour and pick appropriate light preset
-      const getLocalLightPreset = () => {
-        const hour = new Date().toLocaleString('en-US', {
-          timeZone: 'Asia/Kolkata',
-          hour: 'numeric',
-          hour12: false
-        })
-        const h = parseInt(hour, 10)
-        if (h >= 6  && h < 9)  return 'dawn'
-        if (h >= 9  && h < 18) return 'day'
-        if (h >= 18 && h < 20) return 'dusk'
-        return 'night'
-      }
+      // Error handler for any Mapbox runtime errors
+      map.on('error', (e) => {
+        console.warn('Mapbox error (non-fatal):', e.error?.message || e.message)
+      })
 
-      const preset = getLocalLightPreset()
-      map.setConfigProperty('basemap', 'lightPreset', preset)
+    } catch (err) {
+      console.error('Failed to initialize Mapbox map:', err)
+    }
 
-      // Store on window so the lighting controls can update it
-      window._mapLightPreset = preset
-    })
-
-    // Cleanup
     return () => {
-      map.remove()
-      mapInstanceRef.current = null
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove()
+        mapInstanceRef.current = null
+      }
     }
   }, [mapboxReady, buildings])
 
@@ -354,66 +348,25 @@ export default function CampusPage() {
               </div>
             </div>
           )}
+          {!process.env.NEXT_PUBLIC_MAPBOX_TOKEN && !loading && (
+            <div className="absolute inset-0 bg-[#0A0A0A] flex items-center justify-center z-10">
+              <div className="flex flex-col items-center gap-3 text-center px-6">
+                <span className="text-2xl">🗺️</span>
+                <p className="text-slate-400 text-sm font-medium">Campus Map Unavailable</p>
+                <p className="text-slate-500 text-xs max-w-xs">
+                  Set <code className="text-emerald-400">NEXT_PUBLIC_MAPBOX_TOKEN</code> in your
+                  <code className="text-emerald-400"> .env.local</code> file to enable the interactive map.
+                </p>
+              </div>
+            </div>
+          )}
           <div ref={mapRef} className="w-full h-full"/>
         </div>
 
         <Leaderboard buildings={buildings}/>
       </div>
 
-      {/* Lighting preset switcher */}
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '8px',
-        padding: '10px 14px',
-        background: '#111111',
-        border: '1px solid #1F1F1F',
-        borderRadius: '10px',
-      }}>
-        <span style={{
-          fontSize: '11px',
-          fontWeight: 400,
-          letterSpacing: '0.06em',
-          textTransform: 'uppercase',
-          color: '#4A4A4A',
-          marginRight: '4px'
-        }}>
-          Lighting
-        </span>
-        {[
-          { id: 'dawn',  label: 'Dawn'  },
-          { id: 'day',   label: 'Day'   },
-          { id: 'dusk',  label: 'Dusk'  },
-          { id: 'night', label: 'Night' },
-        ].map(({ id, label }) => (
-          <button
-            key={id}
-            onClick={() => {
-              const m = mapInstanceRef.current
-              if (!m) return
-              m.setConfigProperty('basemap', 'lightPreset', id)
-              window._mapLightPreset = id
-              // Force re-render of active state
-              setActiveLightPreset(id)
-            }}
-            style={{
-              padding:         '5px 12px',
-              borderRadius:    '999px',
-              fontSize:        '12px',
-              fontWeight:      500,
-              cursor:          'pointer',
-              transition:      'all 0.15s',
-              border:          '1px solid',
-              fontFamily:      'Urbanist, sans-serif',
-              background:      activeLightPreset === id ? '#3E3E3E' : 'transparent',        
-              color:           activeLightPreset === id ? '#FFFFFF'  : '#8A8A8A',
-              borderColor:     activeLightPreset === id ? '#3E3E3E'  : '#1F1F1F',
-            }}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
+      {/* Lighting controls only work with Mapbox Standard style — hidden for dark-v11 */}
 
       <div className="flex flex-wrap gap-5 text-xs text-slate-400">
         {[
