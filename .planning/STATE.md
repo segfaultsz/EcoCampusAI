@@ -2,20 +2,22 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: unknown
-stopped_at: Completed Phase 04-waste fixes
-last_updated: "2026-03-15T13:13:47.022Z"
+status: executing
+stopped_at: Completed 09-02-PLAN.md
+last_updated: "2026-03-16T08:00:00.000Z"
 ---
 
 # Project State: EcoCampus AI
 
-**Last updated:** 2026-03-15
+**Last updated:** 2026-03-16
 
 ## Current Position
 
-**Phase:** Complete
+**Phase:** Phase 09: AQI & Energy Fixes
+**Current Plan:** 2
+**Total Plans in Phase:** 2
 
-**Next Action:** Project Finished
+**Next Action:** Complete Phase 09
 
 **Run command:** None
 
@@ -27,7 +29,7 @@ See: .planning/PROJECT.md
 
 **Core value:** Enable proactive sustainability through AI-driven insights that turn raw utility data into actionable savings opportunities
 
-**Current focus:** Polish and completion of frontend.
+**Current focus:** Resolving critical bugs and ensuring map stability.
 
 ---
 
@@ -58,7 +60,8 @@ See: .planning/PROJECT.md
 | 6 | Recommendations & Reports | ✅ Complete | 9 |
 | 7 | Polish & Integration | ✅ Complete | 6 |
 | 8 | Data Availability Fixes | ✅ Complete | 2 |
-| **Total** | **8 phases** | **8/8 complete** | **44** |
+| 9 | AQI & Energy Fixes | ✅ Complete | 2 |
+| **Total** | **9 phases** | **9/9 complete** | **46** |
 
 ---
 
@@ -83,7 +86,7 @@ From `.planning/config.json`:
 
 ---
 
-## Key Decisions
+## Decisions
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
@@ -92,6 +95,8 @@ From `.planning/config.json`:
 | Decoupled backend | ML best in Python, separation of concerns | ✅ Executed |
 | Mock data first | Build UI without waiting for API integration | ✅ Executed |
 | No auth (public) | Simpler for demo, judging access | ✅ Executed |
+| Switch Mapbox style to 'dark-v11' | v3.20 Standard style crashes on missing token due to oak1-lod3 model. | ✅ Executed |
+| Add explicit token guard and fallback | Prevents runtime crash when NEXT_PUBLIC_MAPBOX_TOKEN is missing. | ✅ Executed |
 
 ---
 
@@ -99,18 +104,18 @@ From `.planning/config.json`:
 
 - ✅ PROJECT.md — Project context and vision
 - ✅ config.json — Workflow configuration
-- ✅ REQUIREMENTS.md — 42 v1 requirements with REQ-IDs
-- ✅ ROADMAP.md — 7-phase frontend implementation plan
+- ✅ REQUIREMENTS.md — 46 v1 requirements with REQ-IDs
+- ✅ ROADMAP.md — 9-phase frontend implementation plan
 - ✅ STATE.md — Project state and progress tracking
-- 📋 Phases 1-7: All tasks complete with SUMMARY.md
+- 📋 Phases 1-9: All tasks complete with SUMMARY.md
 
 ---
 
 ## Session Continuity
 
 **Last session resumed:** 2026-03-15  
-**Stopped at:** Completed Phase 04-waste fixes  
-**Resume file:** None
+**Stopped at:** Completed 09-02-PLAN.md  
+**Resume file:** .planning/milestones/v1.0-phases/09-aqi-energy-fixes/09-02-PLAN.md
 
 ---
 

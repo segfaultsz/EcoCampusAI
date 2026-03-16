@@ -12,8 +12,9 @@
 | 6 | Recommendations & Reports | Complete | 2026-03-13 | 9 |
 | 7 | Polish & Integration | Complete | 2026-03-13 | 6 |
 | 8 | Data Availability Fixes | Complete | 2026-03-15 | 2 |
+| 9 | AQI & Energy Fixes | Complete | 2026-03-15 | 2 |
 
-**Total:** 8 phases | 44 requirements | 44 mapped (100%)
+**Total:** 9 phases | 46 requirements | 46 mapped (100%)
 
 ---
 
@@ -35,6 +36,22 @@
 **Day:** 8
 
 **Key Deliverables:** Fully functional real-time energy charts and AQI card.
+
+
+### Phase 9: AQI & Energy Fixes
+
+**Goal:** Resolve critical bugs in AQI calculation and map stability.
+
+**Requirements:** DASH-03, UI-05, INT-02
+
+**Success Criteria:**
+1. AQI card shows correct, non-NaN values by calculating mean from multiple pollutant arrays.
+2. Campus map is resilient to missing/invalid tokens and doesn't crash on model loading.
+3. Fallback UI in place for campus map when token is missing.
+
+**Day:** 8
+
+**Key Deliverables:** Robust AQI monitoring and stable interactive map.
 
 
 ### Phase 1: Setup & Foundation
