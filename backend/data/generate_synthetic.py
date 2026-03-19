@@ -24,16 +24,17 @@ np.random.seed(42)
 # ============================================
 
 BUILDINGS = [
-    {"name": "Computer Science Block", "code": "CSE", "type": "academic", "area_sqft": 15000, "floors": 3, "has_ac": True, "base_kwh": 315, "peak_factor": 1.3},
-    {"name": "Electronics Block", "code": "ECE", "type": "academic", "area_sqft": 12000, "floors": 3, "has_ac": True, "base_kwh": 280, "peak_factor": 1.25},
-    {"name": "Central Library", "code": "LIB", "type": "library", "area_sqft": 20000, "floors": 4, "has_ac": True, "base_kwh": 360, "peak_factor": 1.15},
-    {"name": "Admin Building", "code": "ADM", "type": "admin", "area_sqft": 8000, "floors": 2, "has_ac": True, "base_kwh": 175, "peak_factor": 1.1},
-    {"name": "Mechanical Workshop", "code": "MEC", "type": "lab", "area_sqft": 18000, "floors": 2, "has_ac": False, "base_kwh": 450, "peak_factor": 1.4},
-    {"name": "Boys Hostel A", "code": "HOS1", "type": "hostel", "area_sqft": 25000, "floors": 5, "has_ac": False, "base_kwh": 240, "peak_factor": 1.2},
-    {"name": "Girls Hostel B", "code": "HOS2", "type": "hostel", "area_sqft": 22000, "floors": 5, "has_ac": False, "base_kwh": 220, "peak_factor": 1.15},
-    {"name": "Cafeteria Complex", "code": "CAF", "type": "amenity", "area_sqft": 5000, "floors": 1, "has_ac": True, "base_kwh": 215, "peak_factor": 1.35},
-    {"name": "Sports Complex", "code": "SPT", "type": "amenity", "area_sqft": 30000, "floors": 1, "has_ac": False, "base_kwh": 100, "peak_factor": 1.1},
-    {"name": "Science Block", "code": "SCI", "type": "academic", "area_sqft": 14000, "floors": 3, "has_ac": True, "base_kwh": 295, "peak_factor": 1.3},
+    {"name": "Lecture Hall Complex", "code": "LHC", "type": "academic", "area_sqft": 18000, "floors": 4, "has_ac": True, "base_kwh": 315, "peak_factor": 1.3},
+    {"name": "Galleria", "code": "GAL", "type": "amenity", "area_sqft": 10000, "floors": 2, "has_ac": True, "base_kwh": 215, "peak_factor": 1.35},
+    {"name": "Atrium", "code": "ATR", "type": "admin", "area_sqft": 9000, "floors": 3, "has_ac": True, "base_kwh": 175, "peak_factor": 1.1},
+    {"name": "Core", "code": "COR", "type": "academic", "area_sqft": 14000, "floors": 3, "has_ac": True, "base_kwh": 295, "peak_factor": 1.3},
+    {"name": "Tifac", "code": "TIF", "type": "lab", "area_sqft": 12000, "floors": 2, "has_ac": True, "base_kwh": 350, "peak_factor": 1.4},
+    {"name": "Indoor Stadium", "code": "STD", "type": "amenity", "area_sqft": 30000, "floors": 1, "has_ac": False, "base_kwh": 100, "peak_factor": 1.1},
+    {"name": "Boys Hostel 1", "code": "BH1", "type": "hostel", "area_sqft": 25000, "floors": 5, "has_ac": False, "base_kwh": 240, "peak_factor": 1.2},
+    {"name": "Boys Hostel 2", "code": "BH2", "type": "hostel", "area_sqft": 22000, "floors": 5, "has_ac": False, "base_kwh": 220, "peak_factor": 1.15},
+    {"name": "Girls Hostel", "code": "GH1", "type": "hostel", "area_sqft": 22000, "floors": 5, "has_ac": False, "base_kwh": 220, "peak_factor": 1.15},
+    {"name": "Mechanical Workshop", "code": "MWS", "type": "lab", "area_sqft": 18000, "floors": 2, "has_ac": False, "base_kwh": 450, "peak_factor": 1.4},
+    {"name": "Octagon", "code": "OCT", "type": "amenity", "area_sqft": 15000, "floors": 2, "has_ac": True, "base_kwh": 285, "peak_factor": 1.35},
 ]
 
 # Date range: 6 months (Jan 1 2026 – June 30 2026)
