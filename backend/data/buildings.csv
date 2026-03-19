@@ -1,11 +1,12 @@
 name,code,type,area_sqft,floors,has_ac
-Computer Science Block,CSE,academic,15000,3,True
-Electronics Block,ECE,academic,12000,3,True
-Central Library,LIB,library,20000,4,True
-Admin Building,ADM,admin,8000,2,True
-Mechanical Workshop,MEC,lab,18000,2,False
-Boys Hostel A,HOS1,hostel,25000,5,False
-Girls Hostel B,HOS2,hostel,22000,5,False
-Cafeteria Complex,CAF,amenity,5000,1,True
-Sports Complex,SPT,amenity,30000,1,False
-Science Block,SCI,academic,14000,3,True
+Lecture Hall Complex,LHC,academic,18000,4,True
+Galleria,GAL,amenity,10000,2,True
+Atrium,ATR,admin,9000,3,True
+Core,COR,academic,14000,3,True
+Tifac,TIF,lab,12000,2,True
+Indoor Stadium,STD,amenity,30000,1,False
+Boys Hostel 1,BH1,hostel,25000,5,False
+Boys Hostel 2,BH2,hostel,22000,5,False
+Girls Hostel,GH1,hostel,22000,5,False
+Mechanical Workshop,MWS,lab,18000,2,False
+Octagon,OCT,amenity,15000,2,True
