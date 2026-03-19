@@ -24,7 +24,7 @@ export default function TopBar() {
           </span>
           <span style={{ fontSize:'11px', color:'var(--text-secondary)',
                          fontWeight:400 }}>
-            GreenTech University
+            NIST, Palur Hills
           </span>
         </div>
 
