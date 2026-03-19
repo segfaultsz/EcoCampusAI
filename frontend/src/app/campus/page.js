@@ -2,19 +2,20 @@
 import { useEffect, useState, useRef } from 'react'
 import { useFetch } from '@/lib/hooks'
 
-const CAMPUS_CENTER = [85.8252, 20.2961]
+const CAMPUS_CENTER = [88.3640, 22.5728]
 
 const BUILDING_COORDS = {
-  CSE:  [85.8268, 20.2972],
-  ECE:  [85.8255, 20.2965],
-  LIB:  [85.8245, 20.2960],
-  ADM:  [85.8240, 20.2980],
-  MEC:  [85.8275, 20.2955],
-  HOS1: [85.8230, 20.2950],
-  HOS2: [85.8228, 20.2945],
-  CAF:  [85.8252, 20.2948],
-  SPT:  [85.8285, 20.2940],
-  SCI:  [85.8260, 20.2975],
+  LHC:  [88.3645, 22.5730], // Lecture Hall Complex
+  GAL:  [88.3638, 22.5728], // Galleria
+  ATR:  [88.3642, 22.5724], // Atrium
+  COR:  [88.3650, 22.5722], // Core
+  TIF:  [88.3635, 22.5735], // Tifac
+  STD:  [88.3658, 22.5718], // Indoor Stadium
+  BH1:  [88.3628, 22.5740], // Boys Hostel 1
+  BH2:  [88.3625, 22.5737], // Boys Hostel 2
+  GH1:  [88.3622, 22.5734], // Girls Hostel
+  MWS:  [88.3655, 22.5726], // Mechanical Workshop
+  OCT:  [88.3640, 22.5720], // Octagon
 }
 
 function kwhToColor(kwh) {
