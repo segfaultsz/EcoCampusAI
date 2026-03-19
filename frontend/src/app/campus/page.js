@@ -2,20 +2,20 @@
 import { useEffect, useState, useRef } from 'react'
 import { useFetch } from '@/lib/hooks'
 
-const CAMPUS_CENTER = [88.3640, 22.5728]
+const CAMPUS_CENTER = [84.74472, 19.19917]
 
 const BUILDING_COORDS = {
-  LHC:  [88.3645, 22.5730], // Lecture Hall Complex
-  GAL:  [88.3638, 22.5728], // Galleria
-  ATR:  [88.3642, 22.5724], // Atrium
-  COR:  [88.3650, 22.5722], // Core
-  TIF:  [88.3635, 22.5735], // Tifac
-  STD:  [88.3658, 22.5718], // Indoor Stadium
-  BH1:  [88.3628, 22.5740], // Boys Hostel 1
-  BH2:  [88.3625, 22.5737], // Boys Hostel 2
-  GH1:  [88.3622, 22.5734], // Girls Hostel
-  MWS:  [88.3655, 22.5726], // Mechanical Workshop
-  OCT:  [88.3640, 22.5720], // Octagon
+  LHC: [84.744911, 19.199229],
+  OCT: [84.745132, 19.197689],
+  ATR: [84.746072, 19.196929],
+  STD: [84.746786, 19.198222],
+  GAL: [84.743460, 19.198586],
+  GH1: [84.742656, 19.198184],
+  MWS: [84.745398, 19.199634],
+  BH1: [84.748474, 19.197603],
+  BH2: [84.748228, 19.198411],
+  TIF: [84.745187, 19.199991],
+  COR: [84.745612, 19.200053],
 }
 
 function kwhToColor(kwh) {
@@ -148,7 +148,7 @@ export default function CampusPage() {
         container:  mapRef.current,
         style:      'mapbox://styles/mapbox/dark-v11',
         center:     CAMPUS_CENTER,
-        zoom:       15.5,
+        zoom:       16.5,
         pitch:      55,
         bearing:    -15,
         antialias:  true,
