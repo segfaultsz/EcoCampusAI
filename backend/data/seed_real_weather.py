@@ -11,8 +11,8 @@ from datetime import date, timedelta
 
 OUTPUT_FILE = Path(__file__).parent / "real_weather.json"
 
-CAMPUS_LAT = 20.2961
-CAMPUS_LON = 85.8245
+CAMPUS_LAT = 19.19917
+CAMPUS_LON = 84.74472
 START_DATE  = "2025-09-01"
 END_DATE    = date.today().isoformat()
 

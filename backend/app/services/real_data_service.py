@@ -10,8 +10,8 @@ except ImportError:
     HAS_SUPABASE = False
     print("WARNING: supabase package not installed. Solar/AQI DB persistence disabled.")
 
-CAMPUS_LAT = float(os.getenv("CAMPUS_LAT", "20.2961"))
-CAMPUS_LON = float(os.getenv("CAMPUS_LON", "85.8245"))
+CAMPUS_LAT = float(os.getenv("CAMPUS_LAT", "19.19917"))
+CAMPUS_LON = float(os.getenv("CAMPUS_LON", "84.74472"))
 DATA_GOV_KEY = os.getenv("DATA_GOV_IN_KEY", "")
 
 if HAS_SUPABASE:
