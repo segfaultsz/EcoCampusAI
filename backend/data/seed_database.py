@@ -8,7 +8,7 @@ Handles building ID mapping (CSV uses codes like LHC, GAL, etc., Supabase uses U
 import os
 import sys
 import pandas as pd
-from supabase import create_client
+import httpx
 from dotenv import load_dotenv
 
 # Load env from backend/.env
@@ -20,17 +20,31 @@ DATA_DIR = os.path.join(os.path.dirname(__file__))
 
 BATCH_SIZE = 500  # Supabase insert batch size
 
-
-def get_client():
+def get_headers():
     if not SUPABASE_URL or not SUPABASE_KEY:
         print("ERROR: Set SUPABASE_URL and SUPABASE_SERVICE_KEY in backend/.env")
         sys.exit(1)
-    return create_client(SUPABASE_URL, SUPABASE_KEY)
+    return {
+        "apikey": SUPABASE_KEY,
+        "Authorization": f"Bearer {SUPABASE_KEY}",
+        "Content-Type": "application/json",
+        "Prefer": "return=representation"
+    }
 
-
-def seed_buildings(client) -> dict:
+def seed_buildings() -> dict:
     """Insert buildings and return code→UUID mapping."""
     print("\n[1/6] Seeding buildings...")
+    headers = get_headers()
+    
+    # Task 2: Handle existing buildings
+    get_resp = httpx.get(f"{SUPABASE_URL}/rest/v1/buildings?select=id,code", headers=headers)
+    get_resp.raise_for_status()
+    existing_data = get_resp.json()
+    
+    if len(existing_data) >= 11:
+        print("  Buildings already exist, using existing IDs")
+        return {r["code"]: r["id"] for r in existing_data}
+        
     df = pd.read_csv(os.path.join(DATA_DIR, "buildings.csv"))
     records = df.to_dict("records")
 
@@ -38,31 +52,38 @@ def seed_buildings(client) -> dict:
     for r in records:
         r["has_ac"] = bool(r["has_ac"])
 
-    result = client.table("buildings").insert(records).execute()
+    resp = httpx.post(f"{SUPABASE_URL}/rest/v1/buildings", json=records, headers=headers)
+    resp.raise_for_status()
     
     # Build code → id mapping
     mapping = {}
-    for row in result.data:
+    for row in resp.json():
         mapping[row["code"]] = row["id"]
     
-    print(f"  Inserted {len(result.data)} buildings")
+    print(f"  Inserted {len(resp.json())} buildings")
     return mapping
 
 
-def seed_in_batches(client, table: str, records: list[dict], label: str):
+def seed_in_batches(table: str, records: list[dict], label: str):
     """Insert records in batches to avoid payload limits."""
+    headers = get_headers()
+    
     total = len(records)
     inserted = 0
     for i in range(0, total, BATCH_SIZE):
         batch = records[i:i + BATCH_SIZE]
-        client.table(table).insert(batch).execute()
+        resp = httpx.post(f"{SUPABASE_URL}/rest/v1/{table}", json=batch, headers=headers)
+        if resp.status_code not in (200, 201):
+            print(f"\n  Error inserting {table}: {resp.text}")
+            resp.raise_for_status()
+            
         inserted += len(batch)
         pct = (inserted / total) * 100
         print(f"  Progress: {inserted:,}/{total:,} ({pct:.0f}%)", end="\r")
     print(f"  Inserted {total:,} {label}" + " " * 20)
 
 
-def seed_energy(client, id_map: dict):
+def seed_energy(id_map: dict):
     """Seed energy_readings table."""
     print("\n[2/6] Seeding energy readings (this will take a while)...")
     df = pd.read_csv(os.path.join(DATA_DIR, "energy_readings.csv"))
@@ -77,19 +98,19 @@ def seed_energy(client, id_map: dict):
     for r in records:
         r["is_peak_hour"] = bool(r["is_peak_hour"])
     
-    seed_in_batches(client, "energy_readings", records, "energy readings")
+    seed_in_batches("energy_readings", records, "energy readings")
 
 
-def seed_waste(client, id_map: dict):
+def seed_waste(id_map: dict):
     """Seed waste_records table."""
     print("\n[3/6] Seeding waste records...")
     df = pd.read_csv(os.path.join(DATA_DIR, "waste_records.csv"))
     df["building_id"] = df["building_id"].map(id_map)
     records = df.to_dict("records")
-    seed_in_batches(client, "waste_records", records, "waste records")
+    seed_in_batches("waste_records", records, "waste records")
 
 
-def seed_anomalies(client, id_map: dict):
+def seed_anomalies(id_map: dict):
     """Seed anomalies table."""
     print("\n[4/6] Seeding anomalies...")
     df = pd.read_csv(os.path.join(DATA_DIR, "anomalies.csv"))
@@ -98,24 +119,24 @@ def seed_anomalies(client, id_map: dict):
     records = df.to_dict("records")
     for r in records:
         r["is_resolved"] = bool(r["is_resolved"])
-    seed_in_batches(client, "anomalies", records, "anomalies")
+    seed_in_batches("anomalies", records, "anomalies")
 
 
-def seed_recommendations(client, id_map: dict):
+def seed_recommendations(id_map: dict):
     """Seed recommendations table."""
     print("\n[5/6] Seeding recommendations...")
     df = pd.read_csv(os.path.join(DATA_DIR, "recommendations.csv"))
     df["building_id"] = df["building_id"].map(id_map)
     records = df.to_dict("records")
-    seed_in_batches(client, "recommendations", records, "recommendations")
+    seed_in_batches("recommendations", records, "recommendations")
 
 
-def seed_carbon(client):
+def seed_carbon():
     """Seed carbon_footprint table."""
     print("\n[6/6] Seeding carbon footprint...")
     df = pd.read_csv(os.path.join(DATA_DIR, "carbon_footprint.csv"))
     records = df.to_dict("records")
-    seed_in_batches(client, "carbon_footprint", records, "carbon records")
+    seed_in_batches("carbon_footprint", records, "carbon records")
 
 
 def main():
@@ -128,19 +149,17 @@ def main():
         print("Run generate_synthetic.py first!")
         sys.exit(1)
 
-    client = get_client()
-
     print("=" * 60)
     print("EcoCampus AI - Database Seeder")
     print("=" * 60)
 
     # Seed in order (buildings first for FK references)
-    id_map = seed_buildings(client)
-    seed_energy(client, id_map)
-    seed_waste(client, id_map)
-    seed_anomalies(client, id_map)
-    seed_recommendations(client, id_map)
-    seed_carbon(client)
+    id_map = seed_buildings()
+    seed_energy(id_map)
+    seed_waste(id_map)
+    seed_anomalies(id_map)
+    seed_recommendations(id_map)
+    seed_carbon()
 
     print("\n" + "=" * 60)
     print("DATABASE SEEDED SUCCESSFULLY!")
