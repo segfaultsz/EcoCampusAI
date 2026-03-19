@@ -5,14 +5,14 @@ milestone_name: milestone
 current_plan: Not started
 status: unknown
 stopped_at: Completed 09-02-PLAN.md
-last_updated: "2026-03-16T02:34:31.231Z"
+last_updated: "2026-03-19T00:00:00.000Z"
 progress:
   total_plans: 2
 ---
 
 # Project State: EcoCampus AI
 
-**Last updated:** 2026-03-16
+**Last updated:** 2026-03-19
 
 ## Current Position
 
@@ -132,3 +132,4 @@ From `.planning/config.json`:
 | Wave 4 | Dependencies | - | - | - |
 | 1 | Visual Redesign to Meevis-Style Dark Dashboard | 2026-03-15 | 8c5cc4f | [1-visual-redesign-to-meevis-style-dark-das](./quick/1-visual-redesign-to-meevis-style-dark-das/) |
 | 2 | Campus Map Upgrade: Mapbox Standard + 3D + Dynamic Lighting | 2026-03-15 | 1e85fe9 | [2-campus-map-upgrade-mapbox-standard-3d-dy](./quick/2-campus-map-upgrade-mapbox-standard-3d-dy/) |
+| 3 | Replace Campus Buildings | 2026-03-19 | d532d71 | [3-replace-campus-buildings](./quick/3-replace-campus-buildings/) |
