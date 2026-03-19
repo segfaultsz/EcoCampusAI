@@ -2,7 +2,7 @@
 EcoCampus AI - Seed Database
 ==============================
 Reads generated CSV files and pushes data to Supabase in batches.
-Handles building ID mapping (CSV uses codes, Supabase uses UUIDs).
+Handles building ID mapping (CSV uses codes like LHC, GAL, etc., Supabase uses UUIDs).
 """
 
 import os
