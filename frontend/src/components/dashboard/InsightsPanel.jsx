@@ -28,7 +28,7 @@ export default function InsightsPanel() {
     <div className="space-y-4">
       <h2 className="text-xl font-semibold tracking-tight">Quick Insights</h2>
       {insights.map((insight) => (
-        <div key={insight.id} className="dashboard-card p-4">
+        <div key={insight.id} className="card p-4">
           <div className="flex items-start space-x-3">
             <Lightbulb className="h-5 w-5 flex-shrink-0 text-primary-400" />
             <div className="flex-1">

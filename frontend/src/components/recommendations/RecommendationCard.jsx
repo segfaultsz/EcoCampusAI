@@ -8,7 +8,7 @@ export default function RecommendationCard({ data, onStatusChange }) {
   const CategoryIcon = category === 'Energy' ? Zap : category === 'Waste' ? Trash2 : Globe;
 
   return (
-    <div className="dashboard-card p-5 flex flex-col justify-between h-full">
+    <div className="card p-5 flex flex-col justify-between h-full">
       <div>
         <div className="flex justify-between items-start mb-3">
           <div className="flex items-center space-x-2">

@@ -15,7 +15,7 @@ const SUN_ICON = (
 )
 
 function getLevel(wm2) {
-  if (!wm2) return { label: 'No data', color: 'var(--text-secondary)', bar: 0 }
+  if (wm2 === null || wm2 === undefined) return { label: 'No data', color: 'var(--text-secondary)', bar: 0 }
   if (wm2 >= 700) return { label: 'Very high',  color: '#F26415', bar: 100 }
   if (wm2 >= 400) return { label: 'High',       color: '#F26415', bar: 70  }
   if (wm2 >= 150) return { label: 'Moderate',   color: '#D2D2D2', bar: 40  }

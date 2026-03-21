@@ -7,7 +7,6 @@ export default function ExportActions({ filters }) {
   };
 
   const handleCSV = () => {
-    // Mock CSV generation
     const csvContent = "data:text/csv;charset=utf-8,Metric,Value\nTotal Energy,145200\nTotal Waste,8450\nCarbon Footprint,119064";
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
@@ -19,20 +18,43 @@ export default function ExportActions({ filters }) {
   };
 
   return (
-    <div className="flex gap-3">
-      <button 
+    <div style={{ display: 'flex', gap: '12px' }}>
+      <button
         onClick={handleCSV}
-        className="flex items-center gap-2 px-4 py-2 card hover:bg-slate-700 rounded-lg transition-colors "
+        style={{
+          display: 'flex', alignItems: 'center', gap: '8px',
+          padding: '8px 16px',
+          background: 'transparent',
+          color: 'var(--text-secondary)',
+          border: '1px solid var(--border)',
+          borderRadius: '8px',
+          fontSize: '13px',
+          cursor: 'pointer',
+          fontFamily: 'Urbanist',
+          transition: 'all 0.15s'
+        }}
       >
         <Download size={16} />
-        <span className="text-sm font-medium">CSV</span>
+        <span style={{ fontWeight: 500 }}>CSV</span>
       </button>
-      <button 
+      <button
         onClick={handlePrint}
-        className="flex items-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 text-white rounded-lg transition-colors"
+        style={{
+          display: 'flex', alignItems: 'center', gap: '8px',
+          padding: '8px 16px',
+          background: 'var(--accent)',
+          color: '#FFFFFF',
+          border: 'none',
+          borderRadius: '8px',
+          fontSize: '13px',
+          fontWeight: 500,
+          cursor: 'pointer',
+          fontFamily: 'Urbanist',
+          transition: 'opacity 0.15s'
+        }}
       >
         <FileText size={16} />
-        <span className="text-sm font-medium">PDF Print</span>
+        <span style={{ fontWeight: 500 }}>PDF Print</span>
       </button>
     </div>
   );

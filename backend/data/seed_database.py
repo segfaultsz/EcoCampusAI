@@ -31,6 +31,28 @@ def get_headers():
         "Prefer": "return=representation"
     }
 
+def clear_tables():
+    """Delete all data from all tables (respecting FK order)."""
+    headers = get_headers()
+    # Delete in reverse dependency order
+    tables = [
+        "energy_readings",
+        "waste_records", 
+        "anomalies",
+        "recommendations",
+        "carbon_footprint",
+        "buildings"  # Last due to FK references
+    ]
+    print("\n[0/6] Clearing existing data...")
+    for table in tables:
+        # Using DELETE without filter clears all rows
+        resp = httpx.delete(f"{SUPABASE_URL}/rest/v1/{table}", headers=headers)
+        if resp.status_code in (200, 204):
+            print(f"  Cleared {table}")
+        else:
+            print(f"  Warning: {table} clear returned {resp.status_code}")
+
+
 def seed_buildings() -> dict:
     """Insert buildings and return code→UUID mapping."""
     print("\n[1/6] Seeding buildings...")
@@ -132,11 +154,25 @@ def seed_recommendations(id_map: dict):
 
 
 def seed_carbon():
-    """Seed carbon_footprint table."""
+    """Seed carbon_footprint table with upsert to handle duplicates."""
     print("\n[6/6] Seeding carbon footprint...")
     df = pd.read_csv(os.path.join(DATA_DIR, "carbon_footprint.csv"))
     records = df.to_dict("records")
-    seed_in_batches("carbon_footprint", records, "carbon records")
+    
+    # Use upsert via POST with on_conflict query param
+    headers = get_headers()
+    
+    total = len(records)
+    for i in range(0, total, BATCH_SIZE):
+        batch = records[i:i + BATCH_SIZE]
+        # Use POST with on_conflict=date to upsert
+        url = f"{SUPABASE_URL}/rest/v1/carbon_footprint?on_conflict=date"
+        resp = httpx.post(url, json=batch, headers=headers)
+        if resp.status_code not in (200, 201, 204):
+            print(f"\n  Error upserting carbon_footprint: {resp.status_code} {resp.text}")
+            resp.raise_for_status()
+            
+    print(f"  Inserted/updated {total:,} carbon records" + " " * 20)
 
 
 def main():
@@ -153,6 +189,9 @@ def main():
     print("EcoCampus AI - Database Seeder")
     print("=" * 60)
 
+    # Clear existing data to avoid duplicates
+    clear_tables()
+    
     # Seed in order (buildings first for FK references)
     id_map = seed_buildings()
     seed_energy(id_map)

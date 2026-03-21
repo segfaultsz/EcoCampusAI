@@ -11,7 +11,7 @@ export default function PeakAlertCards() {
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {alerts.map((a) => (
-        <div key={a.id} className="dashboard-card p-4">
+        <div key={a.id} className="card p-4">
           <div className="flex items-center justify-between">
             <span className={`rounded-full px-2 py-1 text-xs font-semibold ${severityColors[a.severity]}`}>{a.severity.toUpperCase()}</span>
             <span className="text-sm text-gray-400">{a.date}</span>

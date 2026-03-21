@@ -64,7 +64,7 @@ export default function EnergyLineChart({ buildingCode = 'ALL' }) {
 
   if (error || !data?.length) return (
     <div className="card">
-      <p className="text-slate-500 text-sm">
+      <p style={{ color: 'var(--text-secondary)', fontSize: '13px' }}>
         Energy data unavailable — ensure the /api/energy/hourly route returns
         [{`{`}hour: "06:00", kwh: 245, predicted: 230, temp: 29{`}`}...]
       </p>

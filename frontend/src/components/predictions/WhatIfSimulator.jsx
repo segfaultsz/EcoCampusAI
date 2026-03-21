@@ -24,7 +24,7 @@ export default function WhatIfSimulator() {
       </div>
       <button onClick={simulate} className="rounded-lg bg-primary-600 px-4 py-2 text-white hover:bg-primary-700">Simulate</button>
       {result && (
-        <div className="dashboard-card p-4 space-y-2">
+        <div className="card p-4 space-y-2">
           <div className="text-xl font-semibold tracking-tight text-primary-400">Estimated Savings</div>
           <div>{result.savingsKwh} kWh/month</div>
           <div>{result.savingsRs.toLocaleString('en-IN')} ₹/month</div>

@@ -1,5 +1,5 @@
 'use client';
-import { useMemo } from 'react';
+import { useState, useEffect } from 'react';
 
 function generateHeatmapData() {
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -17,14 +17,34 @@ function generateHeatmapData() {
 }
 
 function getColor(value) {
-  // Interpolation: low = '#1A1A1A', mid = '#7A3008', high = '#F26415'
   if (value < 40) return '#1A1A1A';
   if (value < 70) return '#7A3008';
   return '#F26415';
 }
 
 export default function HeatmapChart({ building, dateRange }) {
-  const data = useMemo(generateHeatmapData, []);
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    setData(generateHeatmapData());
+  }, [building, dateRange]);
+
+  if (!data) {
+    return (
+      <div className="overflow-x-auto">
+        <div className="inline-block min-w-full" style={{ opacity: 0.3 }}>
+          {Array.from({ length: 7 }).map((_, i) => (
+            <div key={i} className="flex items-center" style={{ gap: 2, marginBottom: 2 }}>
+              <div className="w-16 flex-shrink-0 h-6" style={{ backgroundColor: '#1A1A1A', borderRadius: 3 }} />
+              {Array.from({ length: 24 }).map((_, j) => (
+                <div key={j} className="h-6 w-8" style={{ backgroundColor: '#1A1A1A', borderRadius: 3 }} />
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="overflow-x-auto">

@@ -29,7 +29,7 @@ export default function AnomalyTimeline({ building }) {
               }`}
             ></div>
 
-            <div className="dashboard-card p-4">
+            <div className="card p-4">
               <div className="flex items-start justify-between">
                 <div>
                   <p className="text-sm text-gray-400">{anomaly.timestamp} — {anomaly.building}</p>
