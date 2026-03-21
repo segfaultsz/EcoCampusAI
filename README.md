@@ -245,3 +245,4 @@ This project is developed for academic/educational purposes.
 **Built for smarter, greener campuses 🌱**
 
 </div>
+# EcoCampusAI
