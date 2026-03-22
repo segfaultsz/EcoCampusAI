@@ -234,8 +234,8 @@ async def get_hourly_stats(building_id: str = "ALL") -> list[dict]:
         actual_val = hourly_energy[hourly_energy["timestamp"] == hour_key]["kwh"]
         actual_kwh = float(actual_val.iloc[0]) if not actual_val.empty else None
 
-        # If no real energy data, generate synthetic
-        if actual_kwh is None and not has_real_energy:
+        # If no actual data for this hour, generate synthetic
+        if actual_kwh is None:
             # Realistic campus pattern: low at night, peak 10-16, decline evening
             base = 180
             if 0 <= hour_of_day < 6:
