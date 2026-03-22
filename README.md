@@ -244,5 +244,7 @@ This project is developed for academic/educational purposes.
 
 **Built for smarter, greener campuses 🌱**
 
+*Last updated: March 2026*
+
 </div>
 # EcoCampusAI
