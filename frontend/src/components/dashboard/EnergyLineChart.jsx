@@ -17,20 +17,20 @@ const TOOLTIP_STYLE = {
     padding: '10px 14px',
     boxShadow: 'none'
   },
-  labelStyle: { 
-    color: '#8A8A8A', 
-    marginBottom: '6px', 
+  labelStyle: {
+    color: '#8A8A8A',
+    marginBottom: '6px',
     fontSize: '11px',
-    textTransform: 'uppercase', 
-    letterSpacing: '0.06em' 
+    textTransform: 'uppercase',
+    letterSpacing: '0.06em'
   }
 }
 
 function SkeletonChart() {
   return (
     <div className="card">
-      <div className="animate-shimmer h-5 w-48 rounded mb-4"/>
-      <div className="animate-shimmer h-64 w-full rounded"/>
+      <div className="animate-shimmer h-5 w-48 rounded mb-4" />
+      <div className="animate-shimmer h-64 w-full rounded" />
     </div>
   )
 }
@@ -101,9 +101,9 @@ export default function EnergyLineChart({ buildingCode = 'ALL' }) {
             tickLine={false}
             width={35}
           />
-          <Tooltip 
-            content={<CustomTooltip />} 
-            cursor={{ stroke: '#F26415', strokeWidth: 1, strokeDasharray: '3 3' }} 
+          <Tooltip
+            content={<CustomTooltip />}
+            cursor={{ stroke: '#F26415', strokeWidth: 1, strokeDasharray: '3 3' }}
           />
           <Legend
             wrapperStyle={{ fontSize: '11px', color: '#8A8A8A', fontFamily: 'Urbanist', paddingTop: '12px' }}
@@ -123,7 +123,7 @@ export default function EnergyLineChart({ buildingCode = 'ALL' }) {
             name="Actual (kWh)"
             fill="#F26415"
             fillOpacity={0.85}
-            radius={[4,4,0,0]}
+            radius={[4, 4, 0, 0]}
             isAnimationActive={true}
             animationDuration={800}
             hide={!!hiddenLines['kwh']}

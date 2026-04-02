@@ -13,17 +13,17 @@ function generateData(building) {
     { name: 'General', val: Math.floor(Math.random() * 20 * seed) % 20 + 20 },
   ];
   const total = raw.reduce((acc, curr) => acc + curr.val, 0);
-  return raw.map((d, i) => ({ 
-    name: d.name, 
-    value: Math.round((d.val / total) * 100), 
-    color: COLORS[i] 
+  return raw.map((d, i) => ({
+    name: d.name,
+    value: Math.round((d.val / total) * 100),
+    color: COLORS[i]
   }));
 }
 
 export default function WastePieChart({ building = 'All Buildings' }) {
   const [hiddenSlices, setHiddenSlices] = useState({});
   const fullData = useMemo(() => generateData(building), [building]);
-  
+
   const handleLegendClick = (e) => {
     const name = e.value;
     setHiddenSlices(prev => ({ ...prev, [name]: !prev[name] }));
@@ -58,10 +58,10 @@ export default function WastePieChart({ building = 'All Buildings' }) {
           }}
           formatter={(value) => [`${value}%`, '']}
         />
-        <Legend 
-          onClick={handleLegendClick} 
-          payload={legendPayload} 
-          wrapperStyle={{ cursor: 'pointer' }} 
+        <Legend
+          onClick={handleLegendClick}
+          payload={legendPayload}
+          wrapperStyle={{ cursor: 'pointer' }}
         />
       </PieChart>
     </ResponsiveContainer>

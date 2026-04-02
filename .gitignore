@@ -7,10 +7,12 @@
 
 # ── AI / Agent config (prompt docs) ──
 .agent/
+.gemini/
 .planning/*
 !.planning/REQUIREMENTS.md
 walkthrough.md
 script_verification.md
+demo_script_final.md
 PRD.md
 
 # ── IDE / Editor ──

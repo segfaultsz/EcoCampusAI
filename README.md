@@ -93,8 +93,8 @@ EcoCampus AI is a full-stack sustainability dashboard for educational campuses. 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/x70D/SmartCampusOptimizationDashboard.git
-cd SmartCampusOptimizationDashboard
+git clone https://github.com/segfaultsz/EcoCampusAI.git
+cd EcoCampusAI
 ```
 
 ### 2. Backend Setup
@@ -244,7 +244,6 @@ This project is developed for academic/educational purposes.
 
 **Built for smarter, greener campuses 🌱**
 
-*Last updated: March 2026*
+*Last updated: April 2026*
 
 </div>
-# EcoCampusAI

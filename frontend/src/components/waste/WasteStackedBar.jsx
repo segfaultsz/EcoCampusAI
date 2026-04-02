@@ -16,7 +16,7 @@ function generateData(building) {
 
 export default function WasteStackedBar({ building = 'All Buildings' }) {
   const data = useMemo(() => generateData(building), [building]);
-  
+
   return (
     <ResponsiveContainer width="100%" height={250}>
       <BarChart data={data}>
